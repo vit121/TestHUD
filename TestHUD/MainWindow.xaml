@@ -11,10 +11,43 @@
         <StackPanel
             VerticalAlignment="Bottom"
             Orientation="Horizontal">
-            <StackPanel
-                Orientation="Horizontal">
-                <Image Name="image_tankcompass_compass" Width="120" Height="120"/>
+            <StackPanel>
+                <Grid>
+                    <Image Name="image_tankcompass_compass"
+                           RenderTransformOrigin="0.5, 0.5"
+                           Width="120" Height="120">
+                        <Image.RenderTransform>
+                            <RotateTransform Angle="0" />
+                        </Image.RenderTransform>
+                    </Image>
+                    <Image Name="image_tankcompass_tower"
+                           RenderTransformOrigin="0.5, 0.5"
+                           Width="72" Height="72">
+                        <Image.RenderTransform>
+                            <RotateTransform Angle="45" />
+                        </Image.RenderTransform>
+                    </Image>
+                    <Image Name="image_tankcompass_pad"
+                           Margin="136,0,0,0"
+                           Width="256" Height="120"/>
+                    <StackPanel
+                        Margin="0,13,38,0"
+                        HorizontalAlignment="Right">
+                        <TextBlock FontSize="36" 
+                                   Foreground="White"
+                                   FontWeight="Bold">
+                            123
+                        </TextBlock>
+                        <TextBlock FontSize="36" 
+                                   Foreground="White"
+                                   FontWeight="Bold">
+                            321
+                        </TextBlock>
+                    </StackPanel>
+                </Grid>
             </StackPanel>
+            <!--<Image Name="image_sucompass_pad_left" Width="120" Height="120"/>
+            
             <Image Name="image_isAccumLowPower" Width="120" Height="120"/>
             <Image Name="image_isEngineDamaged" Width="120" Height="120"/>
             <Image Name="image_isEngineOverheat" Width="120" Height="120"/>
@@ -22,10 +55,8 @@
             <Image Name="image_isOilLowPressure" Width="120" Height="120"/>
             <Image Name="image_sucompass_compass" Width="120" Height="120"/>
             <Image Name="image_sucompass_pad" Width="120" Height="120"/>
-            <Image Name="image_sucompass_pad_left" Width="120" Height="120"/>
-            <Image Name="image_sucompass_pad_right" Width="120" Height="120"/>
-            <Image Name="image_tankcompass_pad" Width="120" Height="120"/>
-            <Image Name="image_tankcompass_tower" Width="120" Height="120"/>
+            <Image Name="image_sucompass_pad_right" Width="120" Height="120"/>-->
+           
         </StackPanel>
     </Grid>
 </Window>

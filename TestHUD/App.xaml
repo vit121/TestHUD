@@ -4,6 +4,10 @@
              xmlns:local="clr-namespace:TestHUD"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <Color x:Key="ColorActive">#ffffff</Color>
+            <Color x:Key="ColorDefault">#8e8e8e</Color>
+            <Color x:Key="ColorImageDefault">#3d3d3d</Color>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
