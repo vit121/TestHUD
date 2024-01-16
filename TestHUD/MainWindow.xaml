@@ -5,8 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TestHUD"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
+        Title="MainWindow" Height="600" Width="1200">
+    <Grid
+        Background="Black">
+        <StackPanel
+            VerticalAlignment="Bottom"
+            Orientation="Horizontal">
+            <StackPanel
+                Orientation="Horizontal">
+                <Image Name="image_tankcompass_compass" Width="120" Height="120"/>
+            </StackPanel>
+            <Image Name="image_isAccumLowPower" Width="120" Height="120"/>
+            <Image Name="image_isEngineDamaged" Width="120" Height="120"/>
+            <Image Name="image_isEngineOverheat" Width="120" Height="120"/>
+            <Image Name="image_isHeadLightsOn" Width="120" Height="120"/>
+            <Image Name="image_isOilLowPressure" Width="120" Height="120"/>
+            <Image Name="image_sucompass_compass" Width="120" Height="120"/>
+            <Image Name="image_sucompass_pad" Width="120" Height="120"/>
+            <Image Name="image_sucompass_pad_left" Width="120" Height="120"/>
+            <Image Name="image_sucompass_pad_right" Width="120" Height="120"/>
+            <Image Name="image_tankcompass_pad" Width="120" Height="120"/>
+            <Image Name="image_tankcompass_tower" Width="120" Height="120"/>
+        </StackPanel>
     </Grid>
 </Window>

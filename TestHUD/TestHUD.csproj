@@ -8,4 +8,34 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Images\isAccumLowPower.png" />
+    <None Remove="Images\isEngineDamaged.png" />
+    <None Remove="Images\isEngineOverheat.png" />
+    <None Remove="Images\isHeadLightsOn.png" />
+    <None Remove="Images\isOilLowPressure.png" />
+    <None Remove="Images\sucompass_compass.png" />
+    <None Remove="Images\sucompass_pad.png" />
+    <None Remove="Images\sucompass_pad_left.png" />
+    <None Remove="Images\sucompass_pad_right.png" />
+    <None Remove="Images\tankcompass_compass.png" />
+    <None Remove="Images\tankcompass_pad.png" />
+    <None Remove="Images\tankcompass_tower.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\isAccumLowPower.png" />
+    <Resource Include="Images\isEngineDamaged.png" />
+    <Resource Include="Images\isEngineOverheat.png" />
+    <Resource Include="Images\isHeadLightsOn.png" />
+    <Resource Include="Images\isOilLowPressure.png" />
+    <Resource Include="Images\sucompass_compass.png" />
+    <Resource Include="Images\sucompass_pad.png" />
+    <Resource Include="Images\sucompass_pad_left.png" />
+    <Resource Include="Images\sucompass_pad_right.png" />
+    <Resource Include="Images\tankcompass_compass.png" />
+    <Resource Include="Images\tankcompass_pad.png" />
+    <Resource Include="Images\tankcompass_tower.png" />
+  </ItemGroup>
+
 </Project>
