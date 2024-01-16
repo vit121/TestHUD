@@ -9,6 +9,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TestHUD.Helpers;
+using TestHUD.ViewModel;
 
 namespace TestHUD
 {
@@ -22,6 +23,7 @@ namespace TestHUD
             InitializeComponent();
 
             setupImages();
+            DataContext = new MainWindowViewModel();
         }
 
         void setupImages()

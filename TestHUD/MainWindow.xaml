@@ -5,26 +5,30 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TestHUD"
         mc:Ignorable="d"
+        xmlns:converters="clr-namespace:TestHUD.Converters"
         Title="MainWindow" Height="600" Width="1200">
+    <Window.Resources>
+        <converters:NegativeAngleConverter x:Key="NegativeAngleConverter"></converters:NegativeAngleConverter>
+    </Window.Resources>
     <Grid
         Background="Black">
         <StackPanel
             VerticalAlignment="Bottom"
             Orientation="Horizontal">
-            <StackPanel>
+            <StackPanel DataContext="{Binding Compass}">
                 <Grid>
                     <Image Name="image_tankcompass_compass"
                            RenderTransformOrigin="0.5, 0.5"
                            Width="120" Height="120">
                         <Image.RenderTransform>
-                            <RotateTransform Angle="0" />
+                            <RotateTransform Angle="{Binding CourseAngle, Converter={StaticResource NegativeAngleConverter}}" />
                         </Image.RenderTransform>
                     </Image>
                     <Image Name="image_tankcompass_tower"
                            RenderTransformOrigin="0.5, 0.5"
                            Width="72" Height="72">
                         <Image.RenderTransform>
-                            <RotateTransform Angle="45" />
+                            <RotateTransform Angle="{Binding TowerAngle}" />
                         </Image.RenderTransform>
                     </Image>
                     <Image Name="image_tankcompass_pad"
@@ -35,14 +39,14 @@
                         HorizontalAlignment="Right">
                         <TextBlock FontSize="36" 
                                    Foreground="White"
-                                   FontWeight="Bold">
-                            123
-                        </TextBlock>
+                                   FontWeight="Bold"
+                                   HorizontalAlignment="Center"
+                                   Text="{Binding CourseAngle}"/>
                         <TextBlock FontSize="36" 
                                    Foreground="White"
-                                   FontWeight="Bold">
-                            321
-                        </TextBlock>
+                                   FontWeight="Bold"
+                                   HorizontalAlignment="Center"
+                                   Text="{Binding TowerAngle}"/>
                     </StackPanel>
                 </Grid>
             </StackPanel>
