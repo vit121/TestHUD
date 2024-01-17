@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using TestHUD.Model;
 
 namespace TestHUD.ViewModel
@@ -15,8 +16,7 @@ namespace TestHUD.ViewModel
         public CompassModel Compass
         {
             get { return compass; }
-            set
-            {
+            set {
                 compass = value;
                 OnPropertyChanged("Compass");
             }
@@ -24,9 +24,17 @@ namespace TestHUD.ViewModel
 
         public MainWindowViewModel()
         {
-            Compass = new CompassModel();
-            Compass.CourseAngle = 270;
-            Compass.TowerAngle = 30;
+            Compass = NewMethod();
+            Compass.CourseAngle = 100;
+            Compass.TowerAngle = 90;
+
+            Compass.RotationPeriod = new Duration(timeSpan: new TimeSpan(0, 0, 10)); // 10 - 15 sec
+            Compass.RotationAmplitude = -360; // 180 - 720
+        }
+
+        private static CompassModel NewMethod()
+        {
+            return new CompassModel();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -37,7 +45,5 @@ namespace TestHUD.ViewModel
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-
-
     }
 }
