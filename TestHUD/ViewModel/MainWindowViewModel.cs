@@ -22,19 +22,42 @@ namespace TestHUD.ViewModel
             }
         }
 
+        private SpeedModel speed;
+        public SpeedModel Speed
+        {
+            get { return speed; }
+            set
+            {
+                speed = value;
+                OnPropertyChanged("Speed");
+            }
+        }
+
+        private RpmModel rpm;
+        public RpmModel Rpm
+        {
+            get { return rpm; }
+            set
+            {
+                rpm = value;
+                OnPropertyChanged("Rpm");
+            }
+        }
+
         public MainWindowViewModel()
         {
-            Compass = NewMethod();
-            Compass.CourseAngle = 100;
-            Compass.TowerAngle = 90;
+            Compass = new CompassModel();
+            Compass.CourseAngle = 90;
+            Compass.TowerAngle = 47;
 
             Compass.RotationPeriod = new Duration(timeSpan: new TimeSpan(0, 0, 10)); // 10 - 15 sec
             Compass.RotationAmplitude = -360; // 180 - 720
-        }
 
-        private static CompassModel NewMethod()
-        {
-            return new CompassModel();
+            Speed = new SpeedModel();
+            Speed.Speed = 60;
+
+            Rpm = new RpmModel();
+            Rpm.IgnitionIsOn = true;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -12,6 +12,7 @@
         Title="MainWindow" Height="550" Width="1100">
     <Window.Resources>
         <converters:NegativeAngleConverter x:Key="NegativeAngleConverter"></converters:NegativeAngleConverter>
+        <BooleanToVisibilityConverter x:Key="booleanToVisibilityConverter" />
     </Window.Resources>
     <Grid
         Background="DarkSlateGray">
@@ -110,6 +111,7 @@
             </Grid>
             <!-- Part 2: Speed -->
             <Grid
+                DataContext="{Binding Speed}"
                 Background="Black"
                 Width="256"
                 Margin="20,0,0,0">
@@ -126,7 +128,7 @@
                         Foreground="White"
                         FontWeight="Bold"
                         HorizontalAlignment="Right"
-                        Text="00"/>
+                        Text="{Binding Speed}"/>
                     <StackPanel
                         Grid.Column="1"
                         VerticalAlignment="Center"
@@ -136,92 +138,82 @@
                             FontSize="20" 
                             Foreground="Gray"
                             FontWeight="Bold"
-                            Text="speed"/>
+                            Text="скорость"/>
                         <TextBlock
                             Margin="0,-10,0,0"
                             FontSize="28" 
                             Foreground="White"
                             FontWeight="Bold"
-                            Text="km/h"/>
+                            Text="{Binding SpeedUnits}"/>
                     </StackPanel>
                 </Grid>
             </Grid>
-
             <!-- Part 3: RPM -->
             <Grid
+                DataContext="{Binding Rpm}"
                 Background="Black"
                 Width="120"
                 Margin="20,0,0,0">
-                <!--<Canvas Margin="60">
-                    <Path Stroke="White">
-                        <Path.Data>
-                            <EllipseGeometry RadiusX="50" RadiusY="50"/>
-                        </Path.Data>
-                    </Path>
-                    <Path Stroke="LightBlue" StrokeThickness="10">
-                        <Path.Data>
-                            <PathGeometry>
-                                <PathFigure StartPoint="-50,20">
-                                    <ArcSegment Point="30,28" Size="50,50"
-                                    IsLargeArc="True" SweepDirection="Clockwise"/>
-                                </PathFigure>
-                                <PathGeometry.Transform>
-                                    <RotateTransform Angle="0"/>
-                                </PathGeometry.Transform>
-                            </PathGeometry>
-                        </Path.Data>
-                    </Path>
-                </Canvas>-->
-                <!--<Grid>
-                    <ed:Arc x:Name="ARC1" 
-                        Height="100" Width="100"
+                <Grid>
+                    <ed:Arc 
+                        x:Name="ARC1" 
+                        Height="80" 
+                        Width="80"
                         Stretch="None"
-                        ArcThickness="45"
+                        ArcThickness="10"
                         ArcThicknessUnit="Pixel"
-                        EndAngle="90">
-                        <ed:Arc.Fill>
-                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                <GradientStop Color="#FF16A8D8" Offset="1"/>
-                                <GradientStop Color="#FF5DDBE8"/>
-                                <GradientStop Color="#FF127EA1" Offset="0.981"/>
-                            </LinearGradientBrush>
-                        </ed:Arc.Fill>
+                        Fill="Gray"
+                        StartAngle="-140"
+                        EndAngle="140">
+                    </ed:Arc>
+                    <ed:Arc 
+                        x:Name="ARC2" 
+                        Fill="White" 
+                        Height="80"
+                        Width="80"
+                        Stretch="None"
+                        ArcThickness="10"
+                        ArcThicknessUnit="Pixel"
+                        StartAngle="0"
+                        EndAngle="280"
+                        RenderTransformOrigin="0.5, 0.5">
+                        <ed:Arc.RenderTransform>
+                            <RotateTransform Angle="-140" />
+                        </ed:Arc.RenderTransform>
                     </ed:Arc>
                     <TextBlock 
                         Text="{Binding ElementName=SLD, 
                         Path=Value, StringFormat={}{0:#}%}"
-                        FontSize="50" VerticalAlignment="Center" 
+                        FontSize="24" VerticalAlignment="Center" 
                         TextAlignment="Center" Foreground="DarkMagenta"/>
                 </Grid>
-                <ed:Arc x:Name="ARC2" Grid.Column="1"
-                    Fill="Red" 
-                    Height="100" Width="100"
-                    Stretch="None"
-                    ArcThickness="10"
-                    ArcThicknessUnit="Pixel"
-                    EndAngle="0" />
-                <Slider Height="20" Grid.Column="1"
+                <TextBlock 
+                    Text="об/мин"
+                    FontSize="14"
+                    HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    Maximum="100" Name="SLD"
-                    ValueChanged="Slider_ValueChanged"/>-->
-
-                <!--<Path Stroke="Red" StrokeThickness="10">
-                    <Path.Data>
-                        <PathGeometry>
-                            <PathGeometry.Figures>
-                                <PathFigureCollection>
-                                    <PathFigure StartPoint="20,70">
-                                        <PathFigure.Segments>
-                                            <PathSegmentCollection>
-                                                <ArcSegment Size="10,10" RotationAngle="0" IsLargeArc="True" SweepDirection="Clockwise" Point="100,70" />
-                                            </PathSegmentCollection>
-                                        </PathFigure.Segments>
-                                    </PathFigure>
-                                </PathFigureCollection>
-                            </PathGeometry.Figures>
-                        </PathGeometry>
-                    </Path.Data>
-                </Path>-->
+                    FontWeight="Bold"
+                    Foreground="Gray"/>
+                <Grid
+                    Margin="0,0,0,14"
+                    VerticalAlignment="Bottom"
+                    Width="14"
+                    Height="14">
+                    <Ellipse
+                        Fill="Gray">
+                    </Ellipse>
+                    <Ellipse
+                        Visibility="{Binding IgnitionIsOn, Converter={StaticResource booleanToVisibilityConverter}}"
+                        Fill="LawnGreen">
+                    </Ellipse>
+                </Grid>
+                <Slider 
+                    Height="20" 
+                    VerticalAlignment="Bottom"
+                    Minimum="0"
+                    Maximum="100" 
+                    Name="SLD"
+                    ValueChanged="Slider_ValueChanged"/>
             </Grid>
             <!-- Part 4: Damages -->
             <Grid

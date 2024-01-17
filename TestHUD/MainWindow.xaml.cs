@@ -47,10 +47,10 @@ namespace TestHUD
 
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            //var def = ARC2.EndAngle;
-            //var sldr = (Slider)sender;
-            //ARC1.EndAngle = sldr.Value * 3.6;
-            //ARC2.EndAngle = sldr.Value * 3.6;
+            var def = ARC2.EndAngle;
+            var sldr = (Slider)sender;
+            //ARC2.EndAngle = sldr.Value * 3.6; // For the full circle
+            ARC2.EndAngle = sldr.Value * 2.8;
         }
 
 
