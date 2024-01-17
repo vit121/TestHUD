@@ -9,6 +9,16 @@
             <Color x:Key="ColorActive">#ffffff</Color>
             <Color x:Key="ColorDefault">#8e8e8e</Color>
             <Color x:Key="ColorImageDefault">#3d3d3d</Color>
+
+            <BitmapImage x:Key="image_tankcompass_compass" UriSource="/TestHUD;component/Images/tankcompass_compass.png" />
+            <BitmapImage x:Key="image_tankcompass_pad" UriSource="/TestHUD;component/Images/tankcompass_pad.png" />
+            <BitmapImage x:Key="image_tankcompass_tower" UriSource="/TestHUD;component/Images/tankcompass_tower.png" />
+
+            <BitmapImage x:Key="image_isEngineOverheat" UriSource="/TestHUD;component/Images/isEngineOverheat.png" />
+            <BitmapImage x:Key="image_isOilLowPressure" UriSource="/TestHUD;component/Images/isOilLowPressure.png" />
+            <BitmapImage x:Key="image_isEngineDamaged" UriSource="/TestHUD;component/Images/isEngineDamaged.png" />
+            <BitmapImage x:Key="image_isHeadLightsOn" UriSource="/TestHUD;component/Images/isHeadLightsOn.png" />
+            <BitmapImage x:Key="image_isAccumLowPower" UriSource="/TestHUD;component/Images/isAccumLowPower.png" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

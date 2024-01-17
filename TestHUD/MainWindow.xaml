@@ -7,6 +7,8 @@
         mc:Ignorable="d"
         xmlns:converters="clr-namespace:TestHUD.Converters"
         xmlns:CustomEase="clr-namespace:TestHUD.Helpers"
+        xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing"
+        xmlns:customControls="clr-namespace:TestHUD.CustomControls"
         Title="MainWindow" Height="550" Width="1100">
     <Window.Resources>
         <converters:NegativeAngleConverter x:Key="NegativeAngleConverter"></converters:NegativeAngleConverter>
@@ -40,9 +42,46 @@
                         <Image.Style>
                             <Style>
                                 <Style.Triggers>
+                                    <!--<DataTrigger Binding="{Binding IsAnimating}" Value="True">
+                                            <DataTrigger.EnterActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation
+                                                            Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)"
+                                                            To="{Binding RotationAmplitude}" Duration="{Binding RotationPeriod}" RepeatBehavior="Forever">
+                                                        </DoubleAnimation>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </DataTrigger.EnterActions>
+                                            <DataTrigger.ExitActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation
+                                                            Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)"
+                                                            To="{Binding RotationAmplitude}" Duration="{Binding RotationPeriod}" RepeatBehavior="Forever">
+                                                        </DoubleAnimation>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </DataTrigger.ExitActions>
+                                        </DataTrigger>-->
                                 </Style.Triggers>
                             </Style>
                         </Image.Style>
+                        <!--<Image.Triggers>
+                                <EventTrigger RoutedEvent="Loaded">
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation
+                                                        Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)"
+                                                        To="{Binding RotationAmplitude}" Duration="{Binding RotationPeriod}" RepeatBehavior="Forever">
+                                                    <DoubleAnimation.EasingFunction>
+                                                            <CustomEase:CustomTestFunction EasingMode="EaseIn"/>
+                                                    </DoubleAnimation.EasingFunction>
+                                                </DoubleAnimation>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                </EventTrigger>
+                            </Image.Triggers>-->
                     </Image>
                     <Image Name="image_tankcompass_tower"
                         Margin="0,0,0,0"
@@ -113,6 +152,76 @@
                 Background="Black"
                 Width="120"
                 Margin="20,0,0,0">
+                <!--<Canvas Margin="60">
+                    <Path Stroke="White">
+                        <Path.Data>
+                            <EllipseGeometry RadiusX="50" RadiusY="50"/>
+                        </Path.Data>
+                    </Path>
+                    <Path Stroke="LightBlue" StrokeThickness="10">
+                        <Path.Data>
+                            <PathGeometry>
+                                <PathFigure StartPoint="-50,20">
+                                    <ArcSegment Point="30,28" Size="50,50"
+                                    IsLargeArc="True" SweepDirection="Clockwise"/>
+                                </PathFigure>
+                                <PathGeometry.Transform>
+                                    <RotateTransform Angle="0"/>
+                                </PathGeometry.Transform>
+                            </PathGeometry>
+                        </Path.Data>
+                    </Path>
+                </Canvas>-->
+                <!--<Grid>
+                    <ed:Arc x:Name="ARC1" 
+                        Height="100" Width="100"
+                        Stretch="None"
+                        ArcThickness="45"
+                        ArcThicknessUnit="Pixel"
+                        EndAngle="90">
+                        <ed:Arc.Fill>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FF16A8D8" Offset="1"/>
+                                <GradientStop Color="#FF5DDBE8"/>
+                                <GradientStop Color="#FF127EA1" Offset="0.981"/>
+                            </LinearGradientBrush>
+                        </ed:Arc.Fill>
+                    </ed:Arc>
+                    <TextBlock 
+                        Text="{Binding ElementName=SLD, 
+                        Path=Value, StringFormat={}{0:#}%}"
+                        FontSize="50" VerticalAlignment="Center" 
+                        TextAlignment="Center" Foreground="DarkMagenta"/>
+                </Grid>
+                <ed:Arc x:Name="ARC2" Grid.Column="1"
+                    Fill="Red" 
+                    Height="100" Width="100"
+                    Stretch="None"
+                    ArcThickness="10"
+                    ArcThicknessUnit="Pixel"
+                    EndAngle="0" />
+                <Slider Height="20" Grid.Column="1"
+                    VerticalAlignment="Center"
+                    Maximum="100" Name="SLD"
+                    ValueChanged="Slider_ValueChanged"/>-->
+
+                <!--<Path Stroke="Red" StrokeThickness="10">
+                    <Path.Data>
+                        <PathGeometry>
+                            <PathGeometry.Figures>
+                                <PathFigureCollection>
+                                    <PathFigure StartPoint="20,70">
+                                        <PathFigure.Segments>
+                                            <PathSegmentCollection>
+                                                <ArcSegment Size="10,10" RotationAngle="0" IsLargeArc="True" SweepDirection="Clockwise" Point="100,70" />
+                                            </PathSegmentCollection>
+                                        </PathFigure.Segments>
+                                    </PathFigure>
+                                </PathFigureCollection>
+                            </PathGeometry.Figures>
+                        </PathGeometry>
+                    </Path.Data>
+                </Path>-->
             </Grid>
             <!-- Part 4: Damages -->
             <Grid
@@ -129,50 +238,33 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <Image
+                    <customControls:DamageItemView 
                         Grid.Row="0"
                         Grid.Column="0"
-                        Name="image_isEngineOverheat"
-                        Width="60" Height="60">
-                    </Image>
-                    <Image
+                        ItemDamageColor="Red"
+                        Source="{StaticResource image_isEngineOverheat}" />
+                    <customControls:DamageItemView 
                         Grid.Row="0"
                         Grid.Column="1"
-                        Name="image_isOilLowPressure"
-                        Width="60" Height="60">
-                    </Image>
-                    <Image
+                        ItemDamageColor="Red"
+                        Source="{StaticResource image_isOilLowPressure}"/>
+                    <customControls:DamageItemView 
                         Grid.Row="0"
                         Grid.Column="2"
-                        Name="image_isEngineDamaged"
-                        Width="60" Height="60">
-                    </Image>
-                    <Image
+                        ItemDamageColor="OrangeRed"
+                        Source="{StaticResource image_isEngineDamaged}"/>
+                    <customControls:DamageItemView 
                         Grid.Row="1"
                         Grid.Column="0"
-                        Name="image_isHeadLightsOn"
-                        Width="60" Height="60">
-                    </Image>
-                    <Image
+                        ItemDamageColor="LightSkyBlue"
+                        Source="{StaticResource image_isHeadLightsOn}"/>
+                    <customControls:DamageItemView 
                         Grid.Row="1"
                         Grid.Column="1"
-                        Name="image_isAccumLowPower"
-                        Width="60" Height="60">
-                    </Image>
+                        ItemDamageColor="Red"
+                        Source="{StaticResource image_isAccumLowPower}"/>
                 </Grid>
             </Grid>
-
-                <!--<Image Name="image_sucompass_pad_left" Width="120" Height="120"/>
-            
-            <Image Name="image_isAccumLowPower" Width="120" Height="120"/>
-            <Image Name="image_isEngineDamaged" Width="120" Height="120"/>
-            <Image Name="image_isEngineOverheat" Width="120" Height="120"/>
-            <Image Name="image_isHeadLightsOn" Width="120" Height="120"/>
-            <Image Name="image_isOilLowPressure" Width="120" Height="120"/>
-            <Image Name="image_sucompass_compass" Width="120" Height="120"/>
-            <Image Name="image_sucompass_pad" Width="120" Height="120"/>
-            <Image Name="image_sucompass_pad_right" Width="120" Height="120"/>-->
-
         </StackPanel>
     </Grid>
 </Window>

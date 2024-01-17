@@ -11,5 +11,4 @@ using System.Windows.Data;
 
 namespace TestHUD.Helpers
 {
-
 }
