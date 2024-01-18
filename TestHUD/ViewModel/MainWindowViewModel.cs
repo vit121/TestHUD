@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
@@ -17,61 +18,82 @@ namespace TestHUD.ViewModel
 {
     public class MainWindowViewModel : INotifyPropertyChanged
     {
-        private CompassModel compass;
-        public CompassModel Compass
+        #region Properties
+        public CompassModel Compass { get; set; }
+        public SpeedModel Speed { get; set; }
+        public RpmModel Rpm { get; set; }
+        // Damages
+        private bool isVisible_Damages;
+        public bool IsVisible_Damages
         {
-            get { return compass; }
-            set {
-                compass = value;
-                OnPropertyChanged("Compass");
-            }
-        }
-
-        private SpeedModel speed;
-        public SpeedModel Speed
-        {
-            get { return speed; }
+            get { return isVisible_Damages; }
             set
             {
-                speed = value;
-                OnPropertyChanged("Speed");
+                isVisible_Damages = value;
+                OnPropertyChanged("IsVisible_Damages");
             }
         }
+        public DamageItemModel DamageItem_EngineOverheat { get; set; }
+        public DamageItemModel DamageItem_OilLowPressure { get; set; }
+        public DamageItemModel DamageItem_EngineDamaged { get; set; }
+        public DamageItemModel DamageItem_HeadLightsOn { get; set; }
+        public DamageItemModel DamageItem_AccumLowPower { get; set; }
+        #endregion
 
-        private RpmModel rpm;
-        public RpmModel Rpm
-        {
-            get { return rpm; }
-            set
-            {
-                rpm = value;
-                OnPropertyChanged("Rpm");
-            }
-        }
-
-        DispatcherTimer dispatcherTimer;
+        DispatcherTimer secondTimer;
+        Random random = new Random();
+        int[] damageItemNumbers = new int[5] { 1, 2, 3, 4, 5 };
 
         public MainWindowViewModel()
         {
-            dispatcherTimer = new DispatcherTimer();
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
-            dispatcherTimer.Tick += dispatcherTimer_Tick;
+            secondTimer = new DispatcherTimer();
+            secondTimer.Interval = new TimeSpan(0, 0, 1);
+            secondTimer.Tick += secondTimer_Tick;
+
+            Compass = new CompassModel
+            {
+                IsVisible = true,
+                CourseAngle = 0,
+                TowerAngle = 0,
+                RotationPeriod = new Duration(timeSpan: new TimeSpan(0, 0, 10)), // 10 - 15 sec
+                RotationAmplitude = 180 // 180 - 720
+            };
+
+            Speed = new SpeedModel
+            {
+                IsVisible = true,
+                Speed = 60
+            };
+
+            Rpm = new RpmModel()
+            {
+                IsVisible = true
+            };
+
+            isVisible_Damages = true;
+            DamageItem_EngineOverheat = new DamageItemModel()
+            {
+                DamageId = 1
+            };
+            DamageItem_OilLowPressure = new DamageItemModel()
+            {
+                DamageId = 2
+            };
+            DamageItem_EngineDamaged = new DamageItemModel()
+            {
+                DamageId = 3
+            };
+            DamageItem_HeadLightsOn = new DamageItemModel()
+            {
+                DamageId = 4
+            };
+            DamageItem_AccumLowPower = new DamageItemModel()
+            {
+                DamageId = 5
+            };
 
 
-            Compass = new CompassModel();
-            Compass.CourseAngle = 0;
-            Compass.TowerAngle = 0;
-
-            Compass.RotationPeriod = new Duration(timeSpan: new TimeSpan(0, 0, 10)); // 10 - 15 sec
-            Compass.RotationAmplitude = 180; // 180 - 720
-
-            Speed = new SpeedModel();
-            Speed.Speed = 60;
-
-            Rpm = new RpmModel();
-            Rpm.IgnitionIsOn = true;
-
-            //dispatcherTimer.Start();
+            secondTimer.Start();
 
             //CompositionTarget.Rendering += UpdateData;
 
@@ -117,15 +139,53 @@ namespace TestHUD.ViewModel
             Compass.CourseAngle = Compass.CourseAngle + 1;
         }
 
-        private void dispatcherTimer_Tick(object? sender, EventArgs e)
+        #region Damages
+
+        private void secondTimer_Tick(object? sender, EventArgs e)
         {
-            Compass.CourseAngle = Compass.CourseAngle + 1;
-            Compass.TowerAngle = Compass.TowerAngle - 1;
-            OnPropertyChanged("CourseAngle");
+            //Compass.CourseAngle = Compass.CourseAngle + 1;
+            //Compass.TowerAngle = Compass.TowerAngle - 1;
+            //OnPropertyChanged("CourseAngle");
+            ImitateTimerData();
         }
 
+        private void ImitateTimerData()
+        {
+            bool randomBool = random.Next(2) == 1;
 
-        #region
+            // Rpm ignition
+            Rpm.IgnitionIsOn = randomBool; // random turning on/off
+            Debug.WriteLine(Rpm.IgnitionIsOn);
+
+            // Damages
+            int randomIndex = random.Next(0, 5);
+            int randomNumber = damageItemNumbers[randomIndex];
+            GetDamageItemFromId(randomNumber).IsDamaged = randomBool;
+        }
+
+        private DamageItemModel GetDamageItemFromId(int damageItemId)
+        {
+            switch (damageItemId) 
+            {
+                default:
+                    throw new NotImplementedException();
+                case 1:
+                    return DamageItem_EngineOverheat;
+                case 2:
+                    return DamageItem_OilLowPressure;
+                case 3:
+                    return DamageItem_EngineDamaged;
+                case 4:
+                    return DamageItem_HeadLightsOn;
+                case 5:
+                    return DamageItem_AccumLowPower;
+            }
+        }
+
+        #endregion
+
+
+        #region PropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

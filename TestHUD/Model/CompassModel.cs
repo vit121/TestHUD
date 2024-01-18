@@ -10,6 +10,17 @@ namespace TestHUD.Model
 {
     public class CompassModel: INotifyPropertyChanged
     {
+        private bool isVisible;
+        public bool IsVisible
+        {
+            get { return isVisible; }
+            set
+            {
+                isVisible = value;
+                NotifyPropertyChanged("IsVisible");
+            }
+        }
+
         public bool IsAnimating { get; set; }
 
         private double courseAngle;
@@ -22,16 +33,13 @@ namespace TestHUD.Model
                 NotifyPropertyChanged("CourseAngle");
             }
         }
-
-        //public int CourseAngle { get; set; }
-
         public double TowerAngle { get; set; }
 
         public Duration RotationPeriod { get; set;}
 
         public double RotationAmplitude { get; set; }
 
-        #region 
+        #region PropertyChanged
 
         public event PropertyChangedEventHandler PropertyChanged;
 

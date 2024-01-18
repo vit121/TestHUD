@@ -6,17 +6,22 @@
              xmlns:local="clr-namespace:TestHUD.CustomControls"
              mc:Ignorable="d" 
              xmlns:constants="clr-namespace:TestHUD.Helpers"
-             d:DesignHeight="{Binding Source={x:Static constants:Constants.ImageDamageItemWidth}}" 
-             d:DesignWidth="{Binding Source={x:Static constants:Constants.ImageDamageItemHeight}}">
+             d:DesignHeight="{Binding Source={x:Static constants:Constants.ImageDamageItemSize}}" 
+             d:DesignWidth="{Binding Source={x:Static constants:Constants.ImageDamageItemSize}}">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="booleanToVisibilityConverter" />
+    </UserControl.Resources>
     <Grid>
         <Image
             Source="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=Source}" 
-            Width="{Binding Source={x:Static constants:Constants.ImageDamageItemWidth}}" 
-            Height="{Binding Source={x:Static constants:Constants.ImageDamageItemHeight}}">
+            Width="{Binding Source={x:Static constants:Constants.ImageDamageItemSize}}" 
+            Height="{Binding Source={x:Static constants:Constants.ImageDamageItemSize}}">
         </Image>
         <Rectangle
-            Width="{Binding Source={x:Static constants:Constants.ImageDamageItemWidth}}" 
-            Height="{Binding Source={x:Static constants:Constants.ImageDamageItemHeight}}">
+            Visibility="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=IsDamaged,
+                Converter={StaticResource booleanToVisibilityConverter}}"
+            Width="{Binding Source={x:Static constants:Constants.ImageDamageItemSize}}" 
+            Height="{Binding Source={x:Static constants:Constants.ImageDamageItemSize}}">
             <Rectangle.Fill>
                 <SolidColorBrush Color="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=ItemDamageColor}"/>
             </Rectangle.Fill>

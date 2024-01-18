@@ -32,7 +32,28 @@
         </Storyboard>-->
     </Window.Resources>
     <Grid
-        Background="DarkSlateGray">
+        Background="{StaticResource ColorBackgroundMain}">
+        <StackPanel
+            Margin="0,120,0,0"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Center">
+            <CheckBox
+                Content="Компас и направление башни"
+                FontSize="36"
+                IsChecked="{Binding Compass.IsVisible}" />
+            <CheckBox
+                Content="Скорость"
+                FontSize="36"
+                IsChecked="{Binding Speed.IsVisible}" />
+            <CheckBox
+                Content="Обороты"
+                FontSize="36"
+                IsChecked="{Binding Rpm.IsVisible}" />
+            <CheckBox
+                Content="Повреждения"
+                FontSize="36"
+                IsChecked="{Binding IsVisible_Damages}" />
+        </StackPanel>
         <StackPanel
             Margin="40"
             Height="120"
@@ -42,6 +63,7 @@
             <!-- Part 1: Compass -->
             <Grid
                 DataContext="{Binding Compass}"
+                Visibility="{Binding IsVisible, Converter={StaticResource booleanToVisibilityConverter}}"
                 Background="Black"
                 Width="256">
                 <Image 
@@ -144,6 +166,7 @@
             <!-- Part 2: Speed -->
             <Grid
                 DataContext="{Binding Speed}"
+                Visibility="{Binding IsVisible, Converter={StaticResource booleanToVisibilityConverter}}"
                 Background="Black"
                 Width="256"
                 Margin="20,0,0,0">
@@ -183,6 +206,7 @@
             <!-- Part 3: RPM -->
             <Grid
                 DataContext="{Binding Rpm}"
+                Visibility="{Binding IsVisible, Converter={StaticResource booleanToVisibilityConverter}}"
                 Background="Black"
                 Width="120"
                 Margin="20,0,0,0">
@@ -213,11 +237,11 @@
                             <RotateTransform Angle="-140" />
                         </ed:Arc.RenderTransform>
                     </ed:Arc>
-                    <TextBlock 
+                    <!--<TextBlock 
                         Text="{Binding ElementName=SLD, 
                         Path=Value, StringFormat={}{0:#}%}"
                         FontSize="24" VerticalAlignment="Center" 
-                        TextAlignment="Center" Foreground="DarkMagenta"/>
+                        TextAlignment="Center" Foreground="DarkMagenta"/>-->
                 </Grid>
                 <TextBlock 
                     Text="об/мин"
@@ -239,16 +263,17 @@
                         Fill="LawnGreen">
                     </Ellipse>
                 </Grid>
-                <Slider 
+                <!--<Slider 
                     Height="20" 
                     VerticalAlignment="Bottom"
                     Minimum="0"
                     Maximum="100" 
                     Name="SLD"
-                    ValueChanged="Slider_ValueChanged"/>
+                    ValueChanged="Slider_ValueChanged"/>-->
             </Grid>
             <!-- Part 4: Damages -->
             <Grid
+                Visibility="{Binding IsVisible_Damages, Converter={StaticResource booleanToVisibilityConverter}}"
                 Background="Black"
                 Width="256"
                 Margin="20,0,0,0">
@@ -265,26 +290,31 @@
                     <customControls:DamageItemView 
                         Grid.Row="0"
                         Grid.Column="0"
+                        IsDamaged="{Binding DamageItem_EngineOverheat.IsDamaged}"
                         ItemDamageColor="Red"
                         Source="{StaticResource image_isEngineOverheat}" />
                     <customControls:DamageItemView 
                         Grid.Row="0"
                         Grid.Column="1"
+                        IsDamaged="{Binding DamageItem_OilLowPressure.IsDamaged}"
                         ItemDamageColor="Red"
                         Source="{StaticResource image_isOilLowPressure}"/>
                     <customControls:DamageItemView 
                         Grid.Row="0"
                         Grid.Column="2"
+                        IsDamaged="{Binding DamageItem_EngineDamaged.IsDamaged}"
                         ItemDamageColor="OrangeRed"
                         Source="{StaticResource image_isEngineDamaged}"/>
                     <customControls:DamageItemView 
                         Grid.Row="1"
                         Grid.Column="0"
+                        IsDamaged="{Binding DamageItem_HeadLightsOn.IsDamaged}"
                         ItemDamageColor="LightSkyBlue"
                         Source="{StaticResource image_isHeadLightsOn}"/>
                     <customControls:DamageItemView 
                         Grid.Row="1"
                         Grid.Column="1"
+                        IsDamaged="{Binding DamageItem_AccumLowPower.IsDamaged}"
                         ItemDamageColor="Red"
                         Source="{StaticResource image_isAccumLowPower}"/>
                 </Grid>
