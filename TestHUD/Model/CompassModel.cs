@@ -33,7 +33,17 @@ namespace TestHUD.Model
                 NotifyPropertyChanged("CourseAngle");
             }
         }
-        public double TowerAngle { get; set; }
+
+        private double towerAngle;
+        public double TowerAngle
+        {
+            get { return towerAngle; }
+            set
+            {
+                towerAngle = value;
+                NotifyPropertyChanged("TowerAngle");
+            }
+        }
 
         public Duration RotationPeriod { get; set;}
 

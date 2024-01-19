@@ -20,7 +20,16 @@ namespace TestHUD.Model
             }
         }
 
-        public int Speed { get; set; }
+        private double speed;
+        public double Speed
+        {
+            get { return speed; }
+            set
+            {
+                speed = value;
+                NotifyPropertyChanged("Speed");
+            }
+        }
 
         public string SpeedUnits { get; set; } = "км/ч";
 

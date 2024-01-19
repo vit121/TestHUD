@@ -21,7 +21,16 @@ namespace TestHUD.Model
             }
         }
 
-        public double RpmLevel { get; set; }
+        private double rpmLevel;
+        public double RpmLevel
+        {
+            get { return rpmLevel; }
+            set
+            {
+                rpmLevel = value;
+                NotifyPropertyChanged("RpmLevel");
+            }
+        }
 
         private bool ignitionIsOn;
         public bool IgnitionIsOn

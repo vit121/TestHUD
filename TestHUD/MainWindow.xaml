@@ -12,6 +12,7 @@
         Title="MainWindow" Height="550" Width="1100">
     <Window.Resources>
         <converters:NegativeAngleConverter x:Key="NegativeAngleConverter"></converters:NegativeAngleConverter>
+        <converters:RpmLevelConverter x:Key="RpmLevelConverter"></converters:RpmLevelConverter>
         <BooleanToVisibilityConverter x:Key="booleanToVisibilityConverter" />
 
         <!--<Storyboard
@@ -73,6 +74,29 @@
                     Width="256" Height="120"/>
                 <Grid
                     HorizontalAlignment="Left">
+                    <!--<Grid.Triggers>
+                        <EventTrigger RoutedEvent="Loaded">
+                            <BeginStoryboard x:Name="storyboardCompass">
+                                <Storyboard>
+                                    <DoubleAnimation
+                                            x:Name="testDoubleAnimation" 
+                                            Changed="testDoubleAnimation_Changed"
+                                            Completed="DoubleAnimation_Completed"
+                                            Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)"
+                                            To="{Binding RotationAmplitude}"
+                                            Duration="{Binding RotationPeriod}"
+                                            AutoReverse="False"
+                                            FillBehavior="Stop"
+                                            IsAdditive="True"
+                                            RepeatBehavior="Forever">
+                                        <DoubleAnimation.EasingFunction>
+                                            <CustomEase:CustomTestFunction EasingMode="EaseIn"/>
+                                        </DoubleAnimation.EasingFunction>
+                                    </DoubleAnimation>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Grid.Triggers>-->
                     <Image 
                         Source="{StaticResource image_tankcompass_compass}"
                         RenderTransformOrigin="0.5, 0.5"
@@ -151,16 +175,17 @@
                     Margin="0,13,38,0"
                     Width="60"
                     HorizontalAlignment="Right">
-                    <TextBlock FontSize="36" 
+                    <TextBlock FontSize="32" 
                                     Foreground="White"
                                     FontWeight="Bold"
                                     HorizontalAlignment="Center"
-                                    Text="{Binding CourseAngle, NotifyOnTargetUpdated=True}"/>
-                    <TextBlock FontSize="36" 
+                                    Text="{Binding Path=CourseAngle, StringFormat={}{0:0}, NotifyOnTargetUpdated=True}"
+                                    TextTrimming="CharacterEllipsis"/>
+                    <TextBlock FontSize="32" 
                                     Foreground="White"
                                     FontWeight="Bold"
                                     HorizontalAlignment="Center"
-                                    Text="{Binding TowerAngle}"/>
+                                    Text="{Binding Path=TowerAngle, StringFormat={}{0:0}}"/>
                 </StackPanel>
             </Grid>
             <!-- Part 2: Speed -->
@@ -183,7 +208,7 @@
                         Foreground="White"
                         FontWeight="Bold"
                         HorizontalAlignment="Right"
-                        Text="{Binding Speed}"/>
+                        Text="{Binding Path=Speed, StringFormat={}{0:0}}"/>
                     <StackPanel
                         Grid.Column="1"
                         VerticalAlignment="Center"
@@ -231,7 +256,7 @@
                         ArcThickness="10"
                         ArcThicknessUnit="Pixel"
                         StartAngle="0"
-                        EndAngle="280"
+                        EndAngle="{Binding RpmLevel, Converter={StaticResource RpmLevelConverter}}"
                         RenderTransformOrigin="0.5, 0.5">
                         <ed:Arc.RenderTransform>
                             <RotateTransform Angle="-140" />

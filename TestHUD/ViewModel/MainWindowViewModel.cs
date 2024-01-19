@@ -95,7 +95,7 @@ namespace TestHUD.ViewModel
 
             secondTimer.Start();
 
-            //CompositionTarget.Rendering += UpdateData;
+            CompositionTarget.Rendering += UpdateData;
 
             //Thread thread = new Thread(SinusoidalWave);
             //thread.IsBackground = true;
@@ -131,12 +131,27 @@ namespace TestHUD.ViewModel
 
         private void UpdateData(object? sender, EventArgs e)
         {
-            Debug.WriteLine("UpdateData()");
+            //Debug.WriteLine("UpdateData()");
             if (Compass.CourseAngle >= 360)
             {
                 Compass.CourseAngle = 0;
             }
-            Compass.CourseAngle = Compass.CourseAngle + 1;
+            if (Compass.TowerAngle >= 360)
+            {
+                Compass.TowerAngle = 0;
+            }
+            if (Speed.Speed >= 120)
+            {
+                Speed.Speed = 0;
+            }
+            if (Rpm.RpmLevel >= 100)
+            {
+                Rpm.RpmLevel = 25;
+            }
+            Compass.CourseAngle = Compass.CourseAngle + 0.5;
+            Compass.TowerAngle = Compass.TowerAngle + 0.75;
+            Speed.Speed = Speed.Speed + 0.4;
+            Rpm.RpmLevel = Rpm.RpmLevel + 0.5;
         }
 
         #region Damages
