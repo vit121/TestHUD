@@ -8,9 +8,50 @@ using System.Windows;
 using System.Diagnostics;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Media.Imaging;
+using System.Reflection.Metadata;
 
 namespace TestHUD.Helpers
 {
+    public class AnimationHelper
+    {
+        public static AnimationHelper Instance = new AnimationHelper();
+
+        public double CalculateAngle(double angle)
+        {
+            angle = -angle; // we need to reverse it for our compass
+            if (IsZero(angle))
+            {
+                return 0;
+            }
+            if (angle < 0)
+            {
+                angle = -angle;
+                angle = 360 - angle;
+            }
+            while (angle >= 359.5)
+            {
+                angle = 360 - angle;
+            }
+            if (angle < 0)
+            {
+                angle = -angle;
+            }
+            return angle;
+        }
+
+        private bool IsZero(double currentValue)
+        {
+            if (Math.Abs(currentValue) < 0.1)
+            {
+                return true;
+            }
+            return false;
+        }
+    }
+
+
+
     public class CustomTestFunction : EasingFunctionBase
     {
         public double NormalizedStep { get; set; }

@@ -11,7 +11,7 @@
         xmlns:customControls="clr-namespace:TestHUD.CustomControls"
         Title="MainWindow" Height="550" Width="1100">
     <Window.Resources>
-        <converters:NegativeAngleConverter x:Key="NegativeAngleConverter"></converters:NegativeAngleConverter>
+        <converters:AngleConverter x:Key="AngleConverter"></converters:AngleConverter>
         <converters:RpmLevelConverter x:Key="RpmLevelConverter"></converters:RpmLevelConverter>
         <converters:StringToDoubleConverter x:Key="StringToDoubleConverter"></converters:StringToDoubleConverter>
         <BooleanToVisibilityConverter x:Key="booleanToVisibilityConverter" />
@@ -92,13 +92,27 @@
                         Margin="0,0,0,0"
                         Width="120" Height="120">
                         <Image.RenderTransform>
-                            <RotateTransform 
+                            <RotateTransform
                                 x:Name="rotateTransform_compass" />
                         </Image.RenderTransform>
                         <Image.Triggers>
                             <EventTrigger RoutedEvent="Button.Click">
                                 <BeginStoryboard>
-                                    <Storyboard x:Name="storyboardCompass"/>
+                                    <Storyboard x:Name="storyboardCompass">
+                                        <!--<DoubleAnimation
+                                            x:Name="testDoubleAnimation" 
+                                            Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)"
+                                            To="{Binding RotationAmplitude}"
+                                            Duration="{Binding RotationPeriod}"
+                                            AutoReverse="False"
+                                            FillBehavior="Stop"
+                                            IsAdditive="True"
+                                            RepeatBehavior="Forever">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CustomEase:CustomTestFunction EasingMode="EaseIn"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>-->
+                                    </Storyboard>
                                 </BeginStoryboard>
                             </EventTrigger>
                         </Image.Triggers>
@@ -123,7 +137,7 @@
                         Foreground="White"
                         FontWeight="Bold"
                         HorizontalAlignment="Center"
-                        Text="{Binding Angle, ElementName=rotateTransform_compass, StringFormat={}{0:0}}"
+                        Text="{Binding Angle, ElementName=rotateTransform_compass, Converter={StaticResource AngleConverter}, StringFormat={}{0:0}}"
                         TextTrimming="CharacterEllipsis"/>
                     <TextBlock 
                         FontSize="32" 

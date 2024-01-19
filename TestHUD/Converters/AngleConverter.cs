@@ -2,18 +2,24 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
+using TestHUD.Helpers;
 
 namespace TestHUD.Converters
 {
-    public class NegativeAngleConverter : IValueConverter
+    public class AngleConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-            => value is double number ? -number : 0;
+        {
+            double angle = (double)value;
+            return AnimationHelper.Instance.CalculateAngle(angle);
+        }
+        //=> value is double number ? -number : 0;
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-            => value is double number ? +number : 0;
+            => throw new NotSupportedException();
     }
 }

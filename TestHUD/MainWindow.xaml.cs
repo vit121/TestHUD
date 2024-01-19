@@ -30,7 +30,6 @@ namespace TestHUD
             DataContext = new MainWindowViewModel();
             ViewModel = (DataContext as MainWindowViewModel)!;
 
-            //this.Loaded += new RoutedEventHandler(MainWindow_Loaded);
             createAnimation_Compass();
         }
 
@@ -55,12 +54,11 @@ namespace TestHUD
         }
 
         DoubleAnimation animation = new DoubleAnimation();
+        bool animationIsFirstType = true;
 
         void createAnimation_Compass()
         {
             //var animation = new DoubleAnimation();
-            animation.From = 0;
-            animation.To = 180;
             animation.Duration = new Duration(TimeSpan.FromSeconds(2));
             animation.EasingFunction = new SineEase()
             {
@@ -72,26 +70,35 @@ namespace TestHUD
             animation.Completed += animationCompass_Completed;
             //animation.CurrentTimeInvalidated += Animation_CurrentTimeInvalidated;
             storyboardCompass.Children.Add(animation);
-            storyboardCompass.Begin();
+            startAnimation_Compass();
 
             //var timeline = new StringAnimationUsingKeyFrames();
             //timeline.KeyFrames.Add(new DiscreteStringKeyFrame("Goodbye", KeyTime.FromTimeSpan(new TimeSpan(0, 0, 1))));
             //text_speed.BeginAnimation(TextBox.TextProperty, timeline);
         }
 
-        void calculateAnimation_Compass()
+        void startAnimation_Compass()
         {
             animation.From = rotateTransform_compass.Angle;
-            animation.To = 0;
+            if (animationIsFirstType)
+            {
+                animation.To = -180; // 180
+                animation.Duration = new Duration(TimeSpan.FromSeconds(10)); // 10
+            }
+            else
+            {
+                animation.To = 720; // 720
+                animation.Duration = new Duration(TimeSpan.FromSeconds(15)); // 15
+            }
             storyboardCompass.Begin();
         }
 
-        //private void Animation_CurrentTimeInvalidated(object? sender, EventArgs e)
-        //{
-        //    RotateTransform rotationTower = image_tankcompass_compass.RenderTransform as RotateTransform;
-        //    ViewModel.Compass.CourseAngle = rotationTower.Angle;
-        //    Debug.WriteLine("Animation_CurrentTimeInvalidated!");
-        //}
+        private void Animation_CurrentTimeInvalidated(object? sender, EventArgs e)
+        {
+            RotateTransform rotationTower = image_tankcompass_compass.RenderTransform as RotateTransform;
+            ViewModel.Compass.CourseAngle = rotationTower.Angle;
+            Debug.WriteLine("Animation_CurrentTimeInvalidated!");
+        }
 
         private void animationCompass_Changed(object? sender, EventArgs e)
         {
@@ -101,7 +108,17 @@ namespace TestHUD
         private void animationCompass_Completed(object? sender, EventArgs e)
         {
             Debug.WriteLine("animationCompass_Completed!");
-            calculateAnimation_Compass();
+
+            RotateTransform rotationTower = image_tankcompass_compass.RenderTransform as RotateTransform;
+            Debug.WriteLine("rotationTower.Angle current: " + rotationTower.Angle);
+            //double angle = AnimationHelper.Instance.CalculateAngle(rotationTower.Angle);
+            //Debug.WriteLine("rotationTower.Angle after: " + angle);
+            //ViewModel.Compass.CourseAngle = AnimationHelper.Instance.CalculateAngle(rotationTower.Angle);
+            //ViewModel.Compass.CourseAngle = ViewModel.Compass.CourseAngle + 90;
+            //Debug.WriteLine("rotationTower.Angle after: " + ViewModel.Compass.CourseAngle);
+
+            animationIsFirstType = !animationIsFirstType;
+            startAnimation_Compass();
         }
 
     }

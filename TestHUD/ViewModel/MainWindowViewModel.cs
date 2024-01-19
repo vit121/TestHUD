@@ -53,7 +53,7 @@ namespace TestHUD.ViewModel
             Compass = new CompassModel
             {
                 IsVisible = true,
-                CourseAngle = 0,
+                CourseAngle = 10,
                 TowerAngle = 0,
                 RotationPeriod = new Duration(timeSpan: new TimeSpan(0, 0, 10)), // 10 - 15 sec
                 RotationAmplitude = 180 // 180 - 720
