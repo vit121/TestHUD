@@ -13,24 +13,8 @@
     <Window.Resources>
         <converters:NegativeAngleConverter x:Key="NegativeAngleConverter"></converters:NegativeAngleConverter>
         <converters:RpmLevelConverter x:Key="RpmLevelConverter"></converters:RpmLevelConverter>
+        <converters:StringToDoubleConverter x:Key="StringToDoubleConverter"></converters:StringToDoubleConverter>
         <BooleanToVisibilityConverter x:Key="booleanToVisibilityConverter" />
-
-        <!--<Storyboard
-            x:Key="storyboardCompass">
-            <DoubleAnimation
-                    Changed="testDoubleAnimation_Changed"
-                    Completed="DoubleAnimation_Completed"
-                    Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)"
-                    To="{Binding Compass.RotationAmplitude}"
-                    Duration="{Binding Compass.RotationPeriod}"
-                    AutoReverse="False"
-                    RepeatBehavior="Forever">
-                <DoubleAnimation.EasingFunction>
-                    --><!--<CustomEase:CustomTestFunction EasingMode="EaseIn"/>--><!--
-                    <SineEase EasingMode="EaseInOut" />
-                </DoubleAnimation.EasingFunction>
-            </DoubleAnimation>
-        </Storyboard>-->
     </Window.Resources>
     <Grid
         Background="{StaticResource ColorBackgroundMain}">
@@ -74,6 +58,10 @@
                     Width="256" Height="120"/>
                 <Grid
                     HorizontalAlignment="Left">
+                    <!--Binding.TargetUpdated-->
+                    <!-- <BackEase Amplitude="1" EasingMode="EaseInOut" /> -->
+                    <!--<SineEase EasingMode="EaseInOut" /> -->
+                    <!--<CustomEase:CustomTestFunction EasingMode="EaseIn"/>-->
                     <!--<Grid.Triggers>
                         <EventTrigger RoutedEvent="Loaded">
                             <BeginStoryboard x:Name="storyboardCompass">
@@ -90,78 +78,33 @@
                                             IsAdditive="True"
                                             RepeatBehavior="Forever">
                                         <DoubleAnimation.EasingFunction>
-                                            <CustomEase:CustomTestFunction EasingMode="EaseIn"/>
+                                            <SineEase EasingMode="EaseInOut"/>
                                         </DoubleAnimation.EasingFunction>
                                     </DoubleAnimation>
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
                     </Grid.Triggers>-->
-                    <Image 
+                    <Image
+                        x:Name="image_tankcompass_compass"
                         Source="{StaticResource image_tankcompass_compass}"
                         RenderTransformOrigin="0.5, 0.5"
                         Margin="0,0,0,0"
                         Width="120" Height="120">
                         <Image.RenderTransform>
-                            <RotateTransform Angle="{Binding CourseAngle, Converter={StaticResource NegativeAngleConverter}}" />
+                            <RotateTransform 
+                                x:Name="rotateTransform_compass" />
                         </Image.RenderTransform>
-                        <Image.Style>
-                            <Style>
-                                <Style.Triggers>
-                                    <!--<DataTrigger Binding="{Binding IsAnimating}" Value="True">
-                                            <DataTrigger.EnterActions>
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <DoubleAnimation
-                                                            Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)"
-                                                            To="{Binding RotationAmplitude}" Duration="{Binding RotationPeriod}" RepeatBehavior="Forever">
-                                                        </DoubleAnimation>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </DataTrigger.EnterActions>
-                                            <DataTrigger.ExitActions>
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <DoubleAnimation
-                                                            Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)"
-                                                            To="{Binding RotationAmplitude}" Duration="{Binding RotationPeriod}" RepeatBehavior="Forever">
-                                                        </DoubleAnimation>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </DataTrigger.ExitActions>
-                                        </DataTrigger>-->
-                                </Style.Triggers>
-                            </Style>
-                        </Image.Style>
-                        <!--Binding.TargetUpdated-->
-                        <!-- <BackEase Amplitude="1" EasingMode="EaseInOut" /> -->
-                        <!--<SineEase EasingMode="EaseInOut" /> -->
-                        <!--<Image.Triggers>
-                            <EventTrigger RoutedEvent="Loaded">
-                                <BeginStoryboard x:Name="storyboardCompass">
-                                    <Storyboard>
-                                        <DoubleAnimation
-                                            x:Name="testDoubleAnimation" 
-                                            Changed="testDoubleAnimation_Changed"
-                                            Completed="DoubleAnimation_Completed"
-                                            Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)"
-                                            To="{Binding RotationAmplitude}"
-                                            Duration="{Binding RotationPeriod}"
-                                            AutoReverse="False"
-                                            FillBehavior="Stop"
-                                            IsAdditive="True"
-                                            RepeatBehavior="Forever">
-                                            <DoubleAnimation.EasingFunction>
-                                                <CustomEase:CustomTestFunction EasingMode="EaseIn"/>
-                                            </DoubleAnimation.EasingFunction>
-                                        </DoubleAnimation>
-                                    </Storyboard>
+                        <Image.Triggers>
+                            <EventTrigger RoutedEvent="Button.Click">
+                                <BeginStoryboard>
+                                    <Storyboard x:Name="storyboardCompass"/>
                                 </BeginStoryboard>
                             </EventTrigger>
-                        </Image.Triggers>-->
-                        <!--<CustomEase:CustomTestFunction EasingMode="EaseInOut"/>-->
+                        </Image.Triggers>
                     </Image>
                     <Image
+                        x:Name="image_tankcompass_tower"
                         Source="{StaticResource image_tankcompass_tower}"
                         Margin="0,0,0,0"
                         RenderTransformOrigin="0.5, 0.5"
@@ -175,17 +118,20 @@
                     Margin="0,13,38,0"
                     Width="60"
                     HorizontalAlignment="Right">
-                    <TextBlock FontSize="32" 
-                                    Foreground="White"
-                                    FontWeight="Bold"
-                                    HorizontalAlignment="Center"
-                                    Text="{Binding Path=CourseAngle, StringFormat={}{0:0}, NotifyOnTargetUpdated=True}"
-                                    TextTrimming="CharacterEllipsis"/>
-                    <TextBlock FontSize="32" 
-                                    Foreground="White"
-                                    FontWeight="Bold"
-                                    HorizontalAlignment="Center"
-                                    Text="{Binding Path=TowerAngle, StringFormat={}{0:0}}"/>
+                    <TextBlock 
+                        FontSize="32" 
+                        Foreground="White"
+                        FontWeight="Bold"
+                        HorizontalAlignment="Center"
+                        Text="{Binding Angle, ElementName=rotateTransform_compass, StringFormat={}{0:0}}"
+                        TextTrimming="CharacterEllipsis"/>
+                    <TextBlock 
+                        FontSize="32" 
+                        Foreground="White"
+                        FontWeight="Bold"
+                        HorizontalAlignment="Center"
+                        Text="{Binding Path=TowerAngle, StringFormat={}{0:0}}"
+                        TextTrimming="CharacterEllipsis"/>
                 </StackPanel>
             </Grid>
             <!-- Part 2: Speed -->
@@ -203,6 +149,7 @@
                         <ColumnDefinition Width="116" />
                     </Grid.ColumnDefinitions>
                     <TextBlock
+                        x:Name="text_speed"
                         Grid.Column="0"
                         FontSize="72" 
                         Foreground="White"
@@ -262,11 +209,6 @@
                             <RotateTransform Angle="-140" />
                         </ed:Arc.RenderTransform>
                     </ed:Arc>
-                    <!--<TextBlock 
-                        Text="{Binding ElementName=SLD, 
-                        Path=Value, StringFormat={}{0:#}%}"
-                        FontSize="24" VerticalAlignment="Center" 
-                        TextAlignment="Center" Foreground="DarkMagenta"/>-->
                 </Grid>
                 <TextBlock 
                     Text="об/мин"
@@ -288,13 +230,6 @@
                         Fill="LawnGreen">
                     </Ellipse>
                 </Grid>
-                <!--<Slider 
-                    Height="20" 
-                    VerticalAlignment="Bottom"
-                    Minimum="0"
-                    Maximum="100" 
-                    Name="SLD"
-                    ValueChanged="Slider_ValueChanged"/>-->
             </Grid>
             <!-- Part 4: Damages -->
             <Grid

@@ -32,7 +32,7 @@ namespace TestHUD.CustomControls
 
         private static void SourceProperty_PropertyChanged(DependencyObject dobj, DependencyPropertyChangedEventArgs e)
         {       
-            Debug.WriteLine("Image SourceProperty changed is fired");
+            //Debug.WriteLine("Image SourceProperty changed is fired");
         }
 
         public bool IsDamaged

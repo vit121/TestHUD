@@ -95,7 +95,7 @@ namespace TestHUD.ViewModel
 
             secondTimer.Start();
 
-            CompositionTarget.Rendering += UpdateData;
+            //CompositionTarget.Rendering += UpdateData;
 
             //Thread thread = new Thread(SinusoidalWave);
             //thread.IsBackground = true;
@@ -170,7 +170,7 @@ namespace TestHUD.ViewModel
 
             // Rpm ignition
             Rpm.IgnitionIsOn = randomBool; // random turning on/off
-            Debug.WriteLine(Rpm.IgnitionIsOn);
+            //Debug.WriteLine(Rpm.IgnitionIsOn);
 
             // Damages
             int randomIndex = random.Next(0, 5);
@@ -198,7 +198,6 @@ namespace TestHUD.ViewModel
         }
 
         #endregion
-
 
         #region PropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;

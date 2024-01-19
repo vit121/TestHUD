@@ -8,12 +8,19 @@ using System.Windows.Data;
 
 namespace TestHUD.Converters
 {
-    public class NegativeAngleConverter : IValueConverter
+    public class StringToDoubleConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-            => value is double number ? -number : 0;
+        {
+            if (value is string)
+            {
+                return Double.Parse(value as string);
+            }
+            throw new NotSupportedException();
+        }
+
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-            => value is double number ? +number : 0;
+            => throw new NotSupportedException();
     }
 }

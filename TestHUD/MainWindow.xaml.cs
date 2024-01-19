@@ -10,6 +10,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 using TestHUD.Helpers;
 using TestHUD.ViewModel;
 
@@ -20,20 +21,17 @@ namespace TestHUD
     /// </summary>
     public partial class MainWindow : Window
     {
+        private MainWindowViewModel ViewModel { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();
 
             DataContext = new MainWindowViewModel();
+            ViewModel = (DataContext as MainWindowViewModel)!;
 
             //this.Loaded += new RoutedEventHandler(MainWindow_Loaded);
-        }
-
-        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            var def = ARC2.EndAngle;
-            var sldr = (Slider)sender;
-            ARC2.EndAngle = sldr.Value * 2.8; //3.6 For the full circle
+            createAnimation_Compass();
         }
 
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -56,14 +54,55 @@ namespace TestHUD
             rotateTo90.Begin();
         }
 
-        private void DoubleAnimation_Completed(object sender, EventArgs e)
+        DoubleAnimation animation = new DoubleAnimation();
+
+        void createAnimation_Compass()
         {
-            Debug.WriteLine("DoubleAnimation_Completed!");
+            //var animation = new DoubleAnimation();
+            animation.From = 0;
+            animation.To = 180;
+            animation.Duration = new Duration(TimeSpan.FromSeconds(2));
+            animation.EasingFunction = new SineEase()
+            {
+                EasingMode = EasingMode.EaseInOut
+            };
+            Storyboard.SetTarget(animation, image_tankcompass_compass);
+            Storyboard.SetTargetProperty(animation, new PropertyPath("(Image.RenderTransform).(RotateTransform.Angle)"));
+            animation.Changed += animationCompass_Changed;
+            animation.Completed += animationCompass_Completed;
+            //animation.CurrentTimeInvalidated += Animation_CurrentTimeInvalidated;
+            storyboardCompass.Children.Add(animation);
+            storyboardCompass.Begin();
+
+            //var timeline = new StringAnimationUsingKeyFrames();
+            //timeline.KeyFrames.Add(new DiscreteStringKeyFrame("Goodbye", KeyTime.FromTimeSpan(new TimeSpan(0, 0, 1))));
+            //text_speed.BeginAnimation(TextBox.TextProperty, timeline);
         }
 
-        private void testDoubleAnimation_Changed(object sender, EventArgs e)
+        void calculateAnimation_Compass()
         {
-            Debug.WriteLine("testDoubleAnimation_Changed!");
+            animation.From = rotateTransform_compass.Angle;
+            animation.To = 0;
+            storyboardCompass.Begin();
         }
+
+        //private void Animation_CurrentTimeInvalidated(object? sender, EventArgs e)
+        //{
+        //    RotateTransform rotationTower = image_tankcompass_compass.RenderTransform as RotateTransform;
+        //    ViewModel.Compass.CourseAngle = rotationTower.Angle;
+        //    Debug.WriteLine("Animation_CurrentTimeInvalidated!");
+        //}
+
+        private void animationCompass_Changed(object? sender, EventArgs e)
+        {
+            Debug.WriteLine("animationCompass_Changed!");
+        }
+
+        private void animationCompass_Completed(object? sender, EventArgs e)
+        {
+            Debug.WriteLine("animationCompass_Completed!");
+            calculateAnimation_Compass();
+        }
+
     }
 }
