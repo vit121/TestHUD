@@ -1,0 +1,75 @@
+﻿<UserControl x:Class="TestHUD.CustomControls.RpmView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:TestHUD.CustomControls"
+             xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing"
+             xmlns:converters="clr-namespace:TestHUD.Converters"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <converters:RpmLevelConverter x:Key="RpmLevelConverter"></converters:RpmLevelConverter>
+        <BooleanToVisibilityConverter x:Key="booleanToVisibilityConverter" />
+    </UserControl.Resources>
+    <Grid
+        DataContext="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=Rpm}" 
+        Background="Black"
+        Width="120"
+        Margin="20,0,0,0">
+        <Grid>
+            <ed:Arc
+                Height="80" 
+                Width="80"
+                Stretch="None"
+                ArcThickness="10"
+                ArcThicknessUnit="Pixel"
+                Fill="Gray"
+                StartAngle="-140"
+                EndAngle="140">
+            </ed:Arc>
+            <ed:Arc 
+                x:Name="rpm_level" 
+                Fill="White" 
+                Height="80"
+                Width="80"
+                Stretch="None"
+                ArcThickness="10"
+                ArcThicknessUnit="Pixel"
+                StartAngle="0"
+                EndAngle="0"
+                RenderTransformOrigin="0.5, 0.5">
+                <ed:Arc.RenderTransform>
+                    <RotateTransform Angle="-140" />
+                </ed:Arc.RenderTransform>
+                <ed:Arc.Triggers>
+                    <EventTrigger RoutedEvent="Button.Click">
+                        <BeginStoryboard>
+                            <Storyboard x:Name="storyboardRpm">
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </ed:Arc.Triggers>
+            </ed:Arc>
+        </Grid>
+        <TextBlock 
+            Text="об/мин"
+            FontSize="14"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            FontWeight="Bold"
+            Foreground="Gray"/>
+        <Grid
+            Margin="0,0,0,14"
+            VerticalAlignment="Bottom"
+            Width="14"
+            Height="14">
+            <Ellipse
+                Fill="Gray">
+            </Ellipse>
+            <Ellipse
+                Visibility="{Binding IgnitionIsOn, Converter={StaticResource booleanToVisibilityConverter}}" 
+                Fill="LawnGreen">
+            </Ellipse>
+        </Grid>
+    </Grid>
+</UserControl>

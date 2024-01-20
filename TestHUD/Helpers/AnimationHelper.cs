@@ -17,9 +17,13 @@ namespace TestHUD.Helpers
     {
         public static AnimationHelper Instance = new AnimationHelper();
 
-        public double CalculateAngle(double angle)
+        // TODO: Need refactoring!
+        public double CalculateAngle(double angle, bool initialReverse = false)
         {
-            angle = -angle; // we need to reverse it for our compass
+            if (initialReverse)
+            { 
+                angle = -angle; // we need to reverse it for our compass
+            }
             if (IsZero(angle))
             {
                 return 0;
@@ -48,9 +52,21 @@ namespace TestHUD.Helpers
             }
             return false;
         }
+
+        public DoubleAnimation BuildDesiredSineEaseAnimation(DependencyObject dependencyObject, PropertyPath propertyPath)
+        {
+            DoubleAnimation animation = new DoubleAnimation()
+            {
+                EasingFunction = new SineEase()
+                {
+                    EasingMode = EasingMode.EaseInOut
+                }
+            };
+            Storyboard.SetTarget(animation, dependencyObject);
+            Storyboard.SetTargetProperty(animation, propertyPath);
+            return animation;
+        }
     }
-
-
 
     public class CustomTestFunction : EasingFunctionBase
     {

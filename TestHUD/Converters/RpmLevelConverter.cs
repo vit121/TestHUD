@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
+using TestHUD.Helpers;
 
 namespace TestHUD.Converters
 {
@@ -14,7 +16,7 @@ namespace TestHUD.Converters
         {
             if (value is double)
             {
-                return (double)value * 2.8; // 3.6 for the full circle, 2.8 for ours
+                return (double)value * Constants.RpmLevelCircleMultiplier;
             }
             throw new NotSupportedException();
         }

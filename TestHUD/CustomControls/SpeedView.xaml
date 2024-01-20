@@ -1,0 +1,47 @@
+﻿<UserControl x:Class="TestHUD.CustomControls.SpeedView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TestHUD.CustomControls"
+             mc:Ignorable="d">
+    <Grid
+        DataContext="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=Speed}" 
+        Background="Black"
+        Width="256"
+        Margin="20,0,0,0">
+        <Grid
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="130" />
+                <ColumnDefinition Width="116" />
+            </Grid.ColumnDefinitions>
+            <TextBlock
+                x:Name="text_speed"
+                Grid.Column="0"
+                FontSize="72" 
+                Foreground="White"
+                FontWeight="Bold"
+                HorizontalAlignment="Right"
+                Text="{Binding Speed, StringFormat={}{0:0}}"/>
+            <StackPanel
+                Grid.Column="1"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                Margin="0,0,0,0">
+            <TextBlock 
+                FontSize="20" 
+                Foreground="Gray"
+                FontWeight="Bold"
+                Text="скорость"/>
+            <TextBlock
+                Margin="0,-10,0,0"
+                FontSize="28" 
+                Foreground="White"
+                FontWeight="Bold"
+                Text="{Binding SpeedUnits}"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

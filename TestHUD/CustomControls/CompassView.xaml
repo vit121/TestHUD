@@ -6,12 +6,76 @@
              xmlns:local="clr-namespace:TestHUD.CustomControls"
              mc:Ignorable="d"
              xmlns:constants="clr-namespace:TestHUD.Helpers"
-             xmlns:converters="clr-namespace:TestHUD.Converters"
-             d:DesignHeight="450" d:DesignWidth="800">
+             xmlns:converters="clr-namespace:TestHUD.Converters">
     <UserControl.Resources>
         <converters:AngleConverter x:Key="AngleConverter"></converters:AngleConverter>
     </UserControl.Resources>
-    <Grid>
-            
+    <Grid
+        DataContext="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=Compass}" 
+        Background="Black"
+        Width="256">
+        <Image 
+            Source="{StaticResource image_tankcompass_pad}"
+            VerticalAlignment="Center"
+            Margin="0,0,0,0"
+            Width="256" Height="120"/>
+        <Grid
+             HorizontalAlignment="Left">
+             <Image
+                x:Name="image_tankcompass_compass"
+                Source="{StaticResource image_tankcompass_compass}"
+                RenderTransformOrigin="0.5, 0.5"
+                Width="120" Height="120">
+                <Image.RenderTransform>
+                    <RotateTransform
+                        x:Name="rotateTransform_compass" />
+                </Image.RenderTransform>
+                <Image.Triggers>
+                    <EventTrigger RoutedEvent="Button.Click">
+                        <BeginStoryboard>
+                            <Storyboard x:Name="storyboardCompass">
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Image.Triggers>
+            </Image>
+            <Image
+                x:Name="image_tankcompass_tower"
+                Source="{StaticResource image_tankcompass_tower}"
+                RenderTransformOrigin="0.5, 0.5"
+                Width="72" Height="72">
+                <Image.RenderTransform>
+                    <RotateTransform
+                         x:Name="rotateTransform_tower" />
+                </Image.RenderTransform>
+                <Image.Triggers>
+                    <EventTrigger RoutedEvent="Button.Click">
+                        <BeginStoryboard>
+                            <Storyboard x:Name="storyboardTower">
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Image.Triggers>
+            </Image>
+        </Grid>
+        <StackPanel
+                Margin="0,13,38,0"
+                Width="60"
+                HorizontalAlignment="Right">
+            <TextBlock 
+                FontSize="32" 
+                Foreground="White"
+                FontWeight="Bold"
+                HorizontalAlignment="Center"
+                Text="{Binding Angle, ElementName=rotateTransform_compass, Converter={StaticResource AngleConverter}, ConverterParameter='reverse', StringFormat={}{0:0}}"
+                TextTrimming="CharacterEllipsis"/>
+            <TextBlock 
+                FontSize="32" 
+                Foreground="White"
+                FontWeight="Bold"
+                HorizontalAlignment="Center"
+                Text="{Binding Angle, ElementName=rotateTransform_tower, Converter={StaticResource AngleConverter}, StringFormat={}{0:0}}"
+                TextTrimming="CharacterEllipsis"/>
+        </StackPanel>
     </Grid>
 </UserControl>

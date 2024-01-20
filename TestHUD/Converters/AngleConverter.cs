@@ -14,8 +14,13 @@ namespace TestHUD.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            bool initialReverse = false;
+            if (parameter is string && (string)parameter == "reverse")
+            {
+                initialReverse = true;
+            }
             double angle = (double)value;
-            return AnimationHelper.Instance.CalculateAngle(angle);
+            return AnimationHelper.Instance.CalculateAngle(angle, initialReverse);
         }
         //=> value is double number ? -number : 0;
 
