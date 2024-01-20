@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.ComponentModel;
 
 namespace TestHUD.Model
 {
@@ -20,8 +14,6 @@ namespace TestHUD.Model
                 NotifyPropertyChanged("IsVisible");
             }
         }
-
-        public bool IsAnimating { get; set; }
 
         private double courseAngle;
         public double CourseAngle
@@ -44,10 +36,6 @@ namespace TestHUD.Model
                 NotifyPropertyChanged("TowerAngle");
             }
         }
-
-        public Duration RotationPeriod { get; set;}
-
-        public double RotationAmplitude { get; set; }
 
         #region PropertyChanged
 

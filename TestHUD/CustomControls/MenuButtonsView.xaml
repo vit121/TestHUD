@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="TestHUD.CustomControls.MenuButtonsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d">
+    <StackPanel>
+        <CheckBox
+            Content="Компас и направление башни"
+            FontSize="36"
+            IsChecked="{Binding Compass.IsVisible}" />
+        <CheckBox
+            Content="Скорость"
+            FontSize="36"
+            IsChecked="{Binding Speed.IsVisible}" />
+        <CheckBox
+            Content="Обороты"
+            FontSize="36"
+            IsChecked="{Binding Rpm.IsVisible}" />
+        <CheckBox
+            Content="Повреждения"
+            FontSize="36"
+            IsChecked="{Binding IsVisible_Damages}" />
+    </StackPanel>
+</UserControl>

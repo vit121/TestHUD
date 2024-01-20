@@ -3,11 +3,11 @@
 namespace TestHUD.CustomControls
 {
     /// <summary>
-    /// Interaction logic for DamagesView.xaml
+    /// Interaction logic for MenuButtonsView.xaml
     /// </summary>
-    public partial class DamagesView : UserControl
+    public partial class MenuButtonsView : UserControl
     {
-        public DamagesView()
+        public MenuButtonsView()
         {
             InitializeComponent();
         }

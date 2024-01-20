@@ -1,44 +1,21 @@
-﻿<Window x:Class="TestHUD.MainWindow"
+﻿<Window x:Class="TestHUD.View.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:TestHUD"
         mc:Ignorable="d"
         xmlns:converters="clr-namespace:TestHUD.Converters"
-        xmlns:CustomEase="clr-namespace:TestHUD.Helpers"
-        xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing"
         xmlns:customControls="clr-namespace:TestHUD.CustomControls"
         Title="MainWindow" Height="550" Width="1100">
     <Window.Resources>
-        <converters:AngleConverter x:Key="AngleConverter"></converters:AngleConverter>
-        <converters:RpmLevelConverter x:Key="RpmLevelConverter"></converters:RpmLevelConverter>
-        <converters:StringToDoubleConverter x:Key="StringToDoubleConverter"></converters:StringToDoubleConverter>
         <BooleanToVisibilityConverter x:Key="booleanToVisibilityConverter" />
     </Window.Resources>
     <Grid
         Background="{StaticResource ColorBackgroundMain}">
-        <StackPanel
+        <customControls:MenuButtonsView
             Margin="0,120,0,0"
             VerticalAlignment="Top"
-            HorizontalAlignment="Center">
-            <CheckBox
-                Content="Компас и направление башни"
-                FontSize="36"
-                IsChecked="{Binding Compass.IsVisible}" />
-            <CheckBox
-                Content="Скорость"
-                FontSize="36"
-                IsChecked="{Binding Speed.IsVisible}" />
-            <CheckBox
-                Content="Обороты"
-                FontSize="36"
-                IsChecked="{Binding Rpm.IsVisible}" />
-            <CheckBox
-                Content="Повреждения"
-                FontSize="36"
-                IsChecked="{Binding IsVisible_Damages}" />
-        </StackPanel>
+            HorizontalAlignment="Center"/>
         <StackPanel
             Margin="40"
             Height="120"

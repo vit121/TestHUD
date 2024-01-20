@@ -1,19 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
 using System.Windows.Threading;
 using TestHUD.Model;
-using static System.Net.Mime.MediaTypeNames;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace TestHUD.ViewModel
 {
@@ -93,29 +81,9 @@ namespace TestHUD.ViewModel
             //CompositionTarget.Rendering += RenderFrame;
         }
 
-        private void RenderFrame(object? sender, EventArgs e)
-        {
-            if (Compass.CourseAngle >= 360)
-            {
-                Compass.CourseAngle = 0;
-            }
-            if (Compass.TowerAngle >= 360)
-            {
-                Compass.TowerAngle = 0;
-            }
-            if (Speed.Speed >= 120)
-            {
-                Speed.Speed = 0;
-            }
-            if (Rpm.RpmLevel >= 100)
-            {
-                Rpm.RpmLevel = 25;
-            }
-            Compass.CourseAngle = Compass.CourseAngle + 0.5;
-            Compass.TowerAngle = Compass.TowerAngle + 0.75;
-            Speed.Speed = Speed.Speed + 0.4;
-            Rpm.RpmLevel = Rpm.RpmLevel + 0.5;
-        }
+        //private void RenderFrame(object? sender, EventArgs e)
+        //{
+        //}
 
         #region Damages
         private void secondsTimer_Tick(object? sender, EventArgs e)
