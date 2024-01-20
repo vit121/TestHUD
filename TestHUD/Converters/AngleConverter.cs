@@ -22,7 +22,6 @@ namespace TestHUD.Converters
             double angle = (double)value;
             return AnimationHelper.Instance.CalculateAngle(angle, initialReverse);
         }
-        //=> value is double number ? -number : 0;
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
             => throw new NotSupportedException();

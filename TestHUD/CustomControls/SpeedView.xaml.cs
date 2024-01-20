@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Expression.Shapes;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -13,9 +14,11 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TestHUD.Helpers;
 using TestHUD.Model;
 
 namespace TestHUD.CustomControls
@@ -33,27 +36,57 @@ namespace TestHUD.CustomControls
 
         public static readonly DependencyProperty SpeedProperty = DependencyProperty.Register("Speed", typeof(SpeedModel), typeof(SpeedView));
 
+        DoubleAnimation animation = new DoubleAnimation();
+        bool animationIsForward = true;
+
         public SpeedView()
         {
             InitializeComponent();
 
-            //CompositionTarget.Rendering += UpdateData;
+            createAnimation();
         }
 
-
-        private async void UpdateData(object? sender, EventArgs e)
+        #region Animation
+        void createAnimation()
         {
-            Thread.Sleep(2000);
-            double sample_rate = 4;
-            double sineFrequensy = 10;
-            int index = 0;
-            var val = Math.Sin(2 * Math.PI * sineFrequensy * index / sample_rate);
-            if (Speed.Speed > 120)
-            {
-                Speed.Speed = 0;
-            }
-            Speed.Speed = val;
+            animation = AnimationHelper.Instance.BuildDesiredSineEaseAnimation(speed_level,
+                new PropertyPath(GroupBox.HeightProperty));
+            animation.Completed += animationTower_Completed;
+            animation.CurrentTimeInvalidated += Animation_CurrentTimeInvalidated;
+            storyboardSpeed.Children.Add(animation);
+            startAnimation();
         }
+
+        void startAnimation()
+        {
+            animation.From = speed_level.Height;
+            if (animationIsForward)
+            {
+                animation.To = 120;
+                animation.Duration = new Duration(TimeSpan.FromSeconds(5));
+            }
+            else
+            {
+                animation.To = 0;
+                animation.Duration = new Duration(TimeSpan.FromSeconds(10));
+            }
+            storyboardSpeed.Begin();
+        }
+
+        private void animationTower_Completed(object? sender, EventArgs e)
+        {
+            animationIsForward = !animationIsForward;
+            startAnimation();
+        }
+
+        private void Animation_CurrentTimeInvalidated(object? sender, EventArgs e)
+        {
+            if (Speed != null)
+            {
+                Speed.Speed = speed_level.Height;
+            }
+        }
+        #endregion
 
     }
 }

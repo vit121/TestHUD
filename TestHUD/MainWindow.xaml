@@ -47,17 +47,15 @@
             Orientation="Horizontal">
             <!-- Part 1: Compass -->
             <customControls:CompassView 
-                Visibility="{Binding IsVisible, Converter={StaticResource booleanToVisibilityConverter}}"
-                DataContext="{Binding Compass}"
+                Visibility="{Binding Compass.IsVisible, Converter={StaticResource booleanToVisibilityConverter}}"
                 Compass="{Binding Compass}"/>
             <!-- Part 2: Speed -->
             <customControls:SpeedView
-                Visibility="{Binding IsVisible, Converter={StaticResource booleanToVisibilityConverter}}"
+                Visibility="{Binding Speed.IsVisible, Converter={StaticResource booleanToVisibilityConverter}}"
                 Speed="{Binding Speed}"/>
             <!-- Part 3: RPM -->
             <customControls:RpmView 
-                Visibility="{Binding IsVisible, Converter={StaticResource booleanToVisibilityConverter}}"
-                DataContext="{Binding Rpm}"
+                Visibility="{Binding Rpm.IsVisible, Converter={StaticResource booleanToVisibilityConverter}}"
                 Rpm="{Binding Rpm}" />
             <!-- Part 4: Damages -->
             <customControls:DamagesView

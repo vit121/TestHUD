@@ -17,40 +17,13 @@ namespace TestHUD.Helpers
     {
         public static AnimationHelper Instance = new AnimationHelper();
 
-        // TODO: Need refactoring!
         public double CalculateAngle(double angle, bool initialReverse = false)
         {
             if (initialReverse)
             { 
                 angle = -angle; // we need to reverse it for our compass
             }
-            if (IsZero(angle))
-            {
-                return 0;
-            }
-            if (angle < 0)
-            {
-                angle = -angle;
-                angle = 360 - angle;
-            }
-            while (angle >= 359.5)
-            {
-                angle = 360 - angle;
-            }
-            if (angle < 0)
-            {
-                angle = -angle;
-            }
-            return angle;
-        }
-
-        private bool IsZero(double currentValue)
-        {
-            if (Math.Abs(currentValue) < 0.1)
-            {
-                return true;
-            }
-            return false;
+            return (angle % 360) + (angle < 0 ? 360 : 0);
         }
 
         public DoubleAnimation BuildDesiredSineEaseAnimation(DependencyObject dependencyObject, PropertyPath propertyPath)
@@ -82,12 +55,8 @@ namespace TestHUD.Helpers
         // mode of interpolation.
         protected override double EaseInCore(double normalizedTime)
         {
-
             Debug.WriteLine("normalizedTime: " + normalizedTime);
             return normalizedTime;
-
-            // applies the formula of time to the seventh power.
-            //return Math.Pow(normalizedTime, 7);
         }
 
         // Typical implementation of CreateInstanceCore

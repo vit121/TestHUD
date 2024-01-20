@@ -21,14 +21,11 @@ namespace TestHUD
     /// </summary>
     public partial class MainWindow : Window
     {
-        private MainWindowViewModel ViewModel { get; set; }
-
         public MainWindow()
         {
             InitializeComponent();
 
             DataContext = new MainWindowViewModel();
-            ViewModel = (DataContext as MainWindowViewModel)!;
         }
     }
 }

@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using TestHUD.Model;
 using static System.Net.Mime.MediaTypeNames;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace TestHUD.ViewModel
 {
@@ -40,23 +41,19 @@ namespace TestHUD.ViewModel
         public DamageItemModel DamageItem_AccumLowPower { get; set; }
         #endregion
 
-        DispatcherTimer secondTimer;
+        DispatcherTimer secondsTimer;
         Random random = new Random();
-        int[] damageItemNumbers = new int[5] { 1, 2, 3, 4, 5 };
+        int[] damageItemNumbers = [1, 2, 3, 4, 5];
 
         public MainWindowViewModel()
         {
-            secondTimer = new DispatcherTimer();
-            secondTimer.Interval = new TimeSpan(0, 0, 1);
-            secondTimer.Tick += secondTimer_Tick;
+            secondsTimer = new DispatcherTimer();
+            secondsTimer.Interval = new TimeSpan(0, 0, 1);
+            secondsTimer.Tick += secondsTimer_Tick;
 
             Compass = new CompassModel
             {
-                IsVisible = true,
-                CourseAngle = 10,
-                TowerAngle = 0,
-                RotationPeriod = new Duration(timeSpan: new TimeSpan(0, 0, 10)), // 10 - 15 sec
-                RotationAmplitude = 180 // 180 - 720
+                IsVisible = true
             };
 
             Speed = new SpeedModel
@@ -91,44 +88,12 @@ namespace TestHUD.ViewModel
                 DamageId = 5
             };
 
+            secondsTimer.Start();
 
-            secondTimer.Start();
-
-            CompositionTarget.Rendering += UpdateData;
-
-            //Thread thread = new Thread(SinusoidalWave);
-            //thread.IsBackground = true;
-            //thread.Start();
+            //CompositionTarget.Rendering += RenderFrame;
         }
 
-        private void SinusoidalWave()
-        {
-            //int sampleRate = 8000;
-            //short[] buffer = new short[8000];
-            //double amplitude = 0.25 * short.MaxValue;
-            //double frequency = 1000;
-            //for (int n = 0; n < buffer.Length; n++)
-            //{
-            //    buffer[n] = (short)(amplitude * Math.Sin((2 * Math.PI * n * frequency) / sampleRate));
-            //}
-
-            bool isAnimating = true;
-            while (isAnimating) {
-                double degrees = 90;
-                double radians = degrees * Math.PI / 180;
-                double sine = Math.Sin(radians);
-                Console.WriteLine("The sine of " + degrees + " degrees is: " + sine);
-
-                if (Compass.CourseAngle >= 360)
-                {
-                    Compass.CourseAngle = 0;
-                }
-                Compass.CourseAngle = Compass.CourseAngle + 1;
-                Thread.Sleep(1000);
-            }
-        }
-
-        private void UpdateData(object? sender, EventArgs e)
+        private void RenderFrame(object? sender, EventArgs e)
         {
             if (Compass.CourseAngle >= 360)
             {
@@ -150,32 +115,23 @@ namespace TestHUD.ViewModel
             Compass.TowerAngle = Compass.TowerAngle + 0.75;
             Speed.Speed = Speed.Speed + 0.4;
             Rpm.RpmLevel = Rpm.RpmLevel + 0.5;
-
-
         }
 
         #region Damages
-
-        private void secondTimer_Tick(object? sender, EventArgs e)
+        private void secondsTimer_Tick(object? sender, EventArgs e)
         {
-            //Compass.CourseAngle = Compass.CourseAngle + 1;
-            //Compass.TowerAngle = Compass.TowerAngle - 1;
-            //OnPropertyChanged("CourseAngle");
             ImitateTimerData();
         }
 
         private void ImitateTimerData()
         {
             bool randomBool = random.Next(2) == 1;
-
             // Rpm ignition
             Rpm.IgnitionIsOn = randomBool; // random turning on/off
-            //Debug.WriteLine(Rpm.IgnitionIsOn);
-
             // Damages
             int randomIndex = random.Next(0, 5);
             int randomNumber = damageItemNumbers[randomIndex];
-            GetDamageItemFromId(randomNumber).IsDamaged = randomBool;
+            GetDamageItemFromId(randomNumber).IsDamaged = randomBool; // random damage item
         }
 
         private DamageItemModel GetDamageItemFromId(int damageItemId)
@@ -196,7 +152,6 @@ namespace TestHUD.ViewModel
                     return DamageItem_AccumLowPower;
             }
         }
-
         #endregion
 
         #region PropertyChanged

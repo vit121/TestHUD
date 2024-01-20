@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -33,10 +34,10 @@ namespace TestHUD.CustomControls
         public static readonly DependencyProperty CompassProperty = DependencyProperty.Register("Compass", typeof(CompassModel), typeof(CompassView));
 
         DoubleAnimation animationCompass = new DoubleAnimation();
-        bool animationCompassIsFirstType = true;
+        bool animationCompassIsForward = true;
 
         DoubleAnimation animationTower = new DoubleAnimation();
-        bool animationTowerIsFirstType = true;
+        bool animationTowerIsForward = true;
 
         public CompassView()
         {
@@ -60,32 +61,30 @@ namespace TestHUD.CustomControls
         void startAnimation_Compass()
         {
             animationCompass.From = rotateTransform_compass.Angle;
-            if (animationCompassIsFirstType)
+            if (animationCompassIsForward)
             {
-                animationCompass.To = -180; // 180
-                animationCompass.Duration = new Duration(TimeSpan.FromSeconds(10)); // 10
+                animationCompass.To = rotateTransform_compass.Angle - 180; // 0.5 turn forward
+                animationCompass.Duration = new Duration(TimeSpan.FromSeconds(10)); // 10 seconds
             }
             else
             {
-                animationCompass.To = 720; // 720
-                animationCompass.Duration = new Duration(TimeSpan.FromSeconds(15)); // 15
+                animationCompass.To = rotateTransform_compass.Angle + 720; // 2 turn back
+                animationCompass.Duration = new Duration(TimeSpan.FromSeconds(15)); // 15 seconds
             }
             storyboardCompass.Begin();
+        }
+
+        private void animationCompass_Completed(object? sender, EventArgs e)
+        {
+            animationCompassIsForward = !animationCompassIsForward;
+            startAnimation_Compass();
         }
 
         //private void Animation_CurrentTimeInvalidated(object? sender, EventArgs e)
         //{
         //    RotateTransform rotationTower = image_tankcompass_compass.RenderTransform as RotateTransform;
         //    Compass.CourseAngle = rotationTower.Angle;
-        //    Debug.WriteLine("Animation_CurrentTimeInvalidated!");
         //}
-
-        private void animationCompass_Completed(object? sender, EventArgs e)
-        {
-            RotateTransform rotationTower = image_tankcompass_compass.RenderTransform as RotateTransform;
-            animationCompassIsFirstType = !animationCompassIsFirstType;
-            startAnimation_Compass();
-        }
         #endregion
 
         #region Animation Tower
@@ -101,23 +100,22 @@ namespace TestHUD.CustomControls
         void startAnimation_Tower()
         {
             animationTower.From = rotateTransform_tower.Angle;
-            if (animationTowerIsFirstType)
+            if (animationTowerIsForward)
             {
-                animationTower.To = 45;
-                animationTower.Duration = new Duration(TimeSpan.FromSeconds(12)); // 10
+                animationTower.To = rotateTransform_tower.Angle + 45; // 45 forward
+                animationTower.Duration = new Duration(TimeSpan.FromSeconds(12)); // 12
             }
             else
             {
-                animationTower.To = -65;
-                animationTower.Duration = new Duration(TimeSpan.FromSeconds(14)); // 15
+                animationTower.To = rotateTransform_tower.Angle - 65; // 65 back
+                animationTower.Duration = new Duration(TimeSpan.FromSeconds(14)); // 14
             }
             storyboardTower.Begin();
         }
 
         private void animationTower_Completed(object? sender, EventArgs e)
         {
-            RotateTransform rotationTower = image_tankcompass_tower.RenderTransform as RotateTransform;
-            animationTowerIsFirstType = !animationTowerIsFirstType;
+            animationTowerIsForward = !animationTowerIsForward;
             startAnimation_Tower();
         }
         #endregion
