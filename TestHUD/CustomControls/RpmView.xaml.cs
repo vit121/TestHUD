@@ -18,7 +18,14 @@ namespace TestHUD.CustomControls
             set { SetValue(RpmProperty, value); }
         }
 
-        public static readonly DependencyProperty RpmProperty = DependencyProperty.Register("Rpm", typeof(RpmModel), typeof(RpmView));
+        private static void Rpm_PropertyChanged(DependencyObject dobj, DependencyPropertyChangedEventArgs e)
+        {
+            var userControl = (RpmView)dobj;
+            userControl.createAnimation();
+        }
+
+        public static readonly DependencyProperty RpmProperty = DependencyProperty.Register("Rpm", typeof(RpmModel), typeof(RpmView),
+             new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.None, new PropertyChangedCallback(Rpm_PropertyChanged)));
 
         DoubleAnimation animation = new DoubleAnimation();
         bool animationIsFirstType = true;
@@ -26,8 +33,6 @@ namespace TestHUD.CustomControls
         public RpmView()
         {
             InitializeComponent();
-
-            createAnimation();
         }
 
         #region Animation
@@ -40,7 +45,7 @@ namespace TestHUD.CustomControls
             startAnimation();
         }
 
-        void startAnimation()
+        private void startAnimation()
         {
             animation.From = rpm_level.EndAngle;
             if (animationIsFirstType)

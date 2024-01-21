@@ -54,7 +54,6 @@ namespace TestHUD.ViewModel
                 IsVisible = true
             };
 
-            isVisible_Damages = true;
             DamageItem_EngineOverheat = new DamageItemModel()
             {
                 DamageId = 1
@@ -75,6 +74,7 @@ namespace TestHUD.ViewModel
             {
                 DamageId = 5
             };
+            isVisible_Damages = true;
 
             secondsTimer.Start();
 

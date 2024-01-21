@@ -7,19 +7,15 @@
     <StackPanel>
         <CheckBox
             Content="Компас и направление башни"
-            FontSize="36"
             IsChecked="{Binding Compass.IsVisible}" />
         <CheckBox
             Content="Скорость"
-            FontSize="36"
             IsChecked="{Binding Speed.IsVisible}" />
         <CheckBox
             Content="Обороты"
-            FontSize="36"
             IsChecked="{Binding Rpm.IsVisible}" />
         <CheckBox
             Content="Повреждения"
-            FontSize="36"
             IsChecked="{Binding IsVisible_Damages}" />
     </StackPanel>
 </UserControl>

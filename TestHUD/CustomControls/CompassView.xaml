@@ -60,20 +60,16 @@
             Margin="0,13,38,0"
             Width="60"
             HorizontalAlignment="Right">
-        <TextBlock 
-            FontSize="32" 
-            Foreground="White"
-            FontWeight="Bold"
-            HorizontalAlignment="Center"
-            Text="{Binding Angle, ElementName=rotateTransform_compass, Converter={StaticResource AngleConverter}, ConverterParameter='reverse', StringFormat={}{0:0}}"
-            TextTrimming="CharacterEllipsis"/>
-        <TextBlock 
-            FontSize="32" 
-            Foreground="White"
-            FontWeight="Bold"
-            HorizontalAlignment="Center"
-            Text="{Binding Angle, ElementName=rotateTransform_tower, Converter={StaticResource AngleConverter}, StringFormat={}{0:0}}"
-            TextTrimming="CharacterEllipsis"/>
+            <TextBlock 
+                FontSize="32"
+                HorizontalAlignment="Center"
+                Text="{Binding Angle, ElementName=rotateTransform_compass, Converter={StaticResource AngleConverter}, ConverterParameter='reverse', StringFormat={}{0:0}}"
+                TextTrimming="CharacterEllipsis"/>
+            <TextBlock 
+                FontSize="32"
+                HorizontalAlignment="Center"
+                Text="{Binding Angle, ElementName=rotateTransform_tower, Converter={StaticResource AngleConverter}, StringFormat={}{0:0}}"
+                TextTrimming="CharacterEllipsis"/>
         </StackPanel>
     </Grid>
 </UserControl>

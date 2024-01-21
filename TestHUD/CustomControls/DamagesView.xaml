@@ -23,31 +23,31 @@
                 Grid.Row="0"
                 Grid.Column="0"
                 IsDamaged="{Binding DamageItem_EngineOverheat.IsDamaged}"
-                ItemDamageColor="Red"
+                ItemDamageColor="{StaticResource ColorDamageRed}"
                 Source="{StaticResource image_isEngineOverheat}" />
             <customControls:DamageItemView 
                 Grid.Row="0"
                 Grid.Column="1"
                 IsDamaged="{Binding DamageItem_OilLowPressure.IsDamaged}"
-                ItemDamageColor="Red"
+                ItemDamageColor="{StaticResource ColorDamageRed}"
                 Source="{StaticResource image_isOilLowPressure}"/>
             <customControls:DamageItemView 
                 Grid.Row="0"
                 Grid.Column="2"
                 IsDamaged="{Binding DamageItem_EngineDamaged.IsDamaged}"
-                ItemDamageColor="OrangeRed"
+                ItemDamageColor="{StaticResource ColorDamageOrange}"
                 Source="{StaticResource image_isEngineDamaged}"/>
             <customControls:DamageItemView 
                 Grid.Row="1"
                 Grid.Column="0"
                 IsDamaged="{Binding DamageItem_HeadLightsOn.IsDamaged}"
-                ItemDamageColor="LightSkyBlue"
+                ItemDamageColor="{StaticResource ColorDamageBlue}"
                 Source="{StaticResource image_isHeadLightsOn}"/>
             <customControls:DamageItemView 
                 Grid.Row="1"
                 Grid.Column="1"
                 IsDamaged="{Binding DamageItem_AccumLowPower.IsDamaged}"
-                ItemDamageColor="Red"
+                ItemDamageColor="{StaticResource ColorDamageRed}"
                 Source="{StaticResource image_isAccumLowPower}"/>
         </Grid>
     </Grid>

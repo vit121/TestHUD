@@ -55,7 +55,6 @@
             FontSize="14"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
-            FontWeight="Bold"
             Foreground="Gray"/>
         <Grid
             Margin="0,0,0,14"

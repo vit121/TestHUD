@@ -17,7 +17,15 @@ namespace TestHUD.CustomControls
             set { SetValue(CompassProperty, value); }
         }
 
-        public static readonly DependencyProperty CompassProperty = DependencyProperty.Register("Compass", typeof(CompassModel), typeof(CompassView));
+        private static void Compass_PropertyChanged(DependencyObject dobj, DependencyPropertyChangedEventArgs e)
+        {
+            var userControl = (CompassView)dobj;
+            userControl.createAnimation_Compass();
+            userControl.createAnimation_Tower();
+        }
+
+        public static readonly DependencyProperty CompassProperty = DependencyProperty.Register("Compass", typeof(CompassModel), typeof(CompassView),
+            new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.None, new PropertyChangedCallback(Compass_PropertyChanged)));
 
         DoubleAnimation animationCompass = new DoubleAnimation();
         bool animationCompassIsForward = true;
@@ -28,9 +36,6 @@ namespace TestHUD.CustomControls
         public CompassView()
         {
             InitializeComponent();
-
-            createAnimation_Compass();
-            createAnimation_Tower();
         }
 
         #region Animation Compass
@@ -44,7 +49,7 @@ namespace TestHUD.CustomControls
             startAnimation_Compass();
         }
 
-        void startAnimation_Compass()
+        private void startAnimation_Compass()
         {
             animationCompass.From = rotateTransform_compass.Angle;
             if (animationCompassIsForward)
@@ -83,7 +88,7 @@ namespace TestHUD.CustomControls
             startAnimation_Tower();
         }
 
-        void startAnimation_Tower()
+        private void startAnimation_Tower()
         {
             animationTower.From = rotateTransform_tower.Angle;
             if (animationTowerIsForward)

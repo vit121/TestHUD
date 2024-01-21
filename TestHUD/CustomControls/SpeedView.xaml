@@ -19,9 +19,7 @@
             <TextBlock
                 x:Name="text_speed"
                 Grid.Column="0"
-                FontSize="72" 
-                Foreground="White"
-                FontWeight="Bold"
+                FontSize="72"
                 HorizontalAlignment="Right"
                 Text="{Binding Speed, StringFormat={}{0:0}}"/>
             <StackPanel
@@ -32,13 +30,10 @@
                 <TextBlock 
                     FontSize="20" 
                     Foreground="Gray"
-                    FontWeight="Bold"
                     Text="скорость"/>
                 <TextBlock
                     Margin="0,-10,0,0"
-                    FontSize="28" 
-                    Foreground="White"
-                    FontWeight="Bold"
+                    FontSize="28"
                     Text="{Binding SpeedUnits}"/>
             </StackPanel>
         </Grid>
