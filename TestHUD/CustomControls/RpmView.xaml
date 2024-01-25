@@ -3,53 +3,44 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing"
              xmlns:converters="clr-namespace:TestHUD.Converters"
-             mc:Ignorable="d">
+             xmlns:customControls="clr-namespace:TestHUD.CustomControls"
+             mc:Ignorable="d"
+             x:Name="userControl">
     <UserControl.Resources>
-        <converters:RpmLevelConverter x:Key="RpmLevelConverter"></converters:RpmLevelConverter>
         <BooleanToVisibilityConverter x:Key="booleanToVisibilityConverter" />
+        <converters:RpmLevelConverter x:Key="RpmLevelConverter"></converters:RpmLevelConverter>
+        <converters:RpmAngleConverter x:Key="RpmAngleConverter"></converters:RpmAngleConverter>
     </UserControl.Resources>
     <Grid
         DataContext="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=Rpm}" 
         Background="Black"
-        Width="120"
-        Margin="20,0,0,0">
-        <Grid>
-            <ed:Arc
-                Height="80" 
-                Width="80"
-                Stretch="None"
-                ArcThickness="10"
-                ArcThicknessUnit="Pixel"
-                Fill="Gray"
-                StartAngle="-140"
-                EndAngle="140">
-            </ed:Arc>
-            <ed:Arc 
+        Width="{Binding Path=RpmViewSize, ElementName=userControl}"
+        Height="{Binding Path=RpmViewSize, ElementName=userControl}">
+        <Grid
+            RenderTransformOrigin="0.5, 0.5">
+            <Grid.RenderTransform>
+                <RotateTransform Angle="30" />
+            </Grid.RenderTransform>
+            <customControls:CustomArc 
+                Center="60,60"
+                StartAngle="90"
+                TargetAngle="300"
+                Radius="40"
+                Color="Gray"
+                StrokeThickness="10">
+            </customControls:CustomArc>
+            <customControls:CustomArc 
                 x:Name="rpm_level" 
-                Fill="White" 
-                Height="80"
-                Width="80"
-                Stretch="None"
-                ArcThickness="10"
-                ArcThicknessUnit="Pixel"
-                StartAngle="0"
-                EndAngle="0"
-                RenderTransformOrigin="0.5, 0.5">
-                <ed:Arc.RenderTransform>
-                    <RotateTransform Angle="-140" />
-                </ed:Arc.RenderTransform>
-                <ed:Arc.Triggers>
-                    <EventTrigger RoutedEvent="Button.Click">
-                        <BeginStoryboard>
-                            <Storyboard x:Name="storyboardRpm">
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </EventTrigger>
-                </ed:Arc.Triggers>
-            </ed:Arc>
+                Center="60,60"
+                StartAngle="90"
+                TargetAngle="{Binding Path=Rpm.RpmLevel, Converter={StaticResource RpmAngleConverter}, ConverterParameter=300, ElementName=userControl}"
+                Radius="40"
+                Color="White"
+                StrokeThickness="10">
+            </customControls:CustomArc>
         </Grid>
+            
         <TextBlock 
             Text="об/мин"
             FontSize="14"

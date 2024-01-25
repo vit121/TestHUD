@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Media;
 using System.Windows.Threading;
 using TestHUD.Model;
 
@@ -79,11 +80,22 @@ namespace TestHUD.ViewModel
             secondsTimer.Start();
 
             //CompositionTarget.Rendering += RenderFrame;
+
+            TestAnimation();
         }
 
-        //private void RenderFrame(object? sender, EventArgs e)
-        //{
-        //}
+        private async void TestAnimation()
+        {
+            for (int i = 0; i <= 50; i++)
+            {
+                this.Rpm.RpmLevel = i;
+                await Task.Delay(100);
+            };
+        }
+
+        private void RenderFrame(object? sender, EventArgs e)
+        {
+        }
 
         #region Damages
         private void secondsTimer_Tick(object? sender, EventArgs e)

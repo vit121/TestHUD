@@ -31,7 +31,8 @@
                 Visibility="{Binding Speed.IsVisible, Converter={StaticResource booleanToVisibilityConverter}}"
                 Speed="{Binding Speed}"/>
             <!-- Part 3: RPM -->
-            <customControls:RpmView 
+            <customControls:RpmView
+                Margin="20,0,0,0"
                 Visibility="{Binding Rpm.IsVisible, Converter={StaticResource booleanToVisibilityConverter}}"
                 Rpm="{Binding Rpm}" />
             <!-- Part 4: Damages -->
