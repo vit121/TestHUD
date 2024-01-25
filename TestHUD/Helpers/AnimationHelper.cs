@@ -23,7 +23,12 @@ namespace TestHUD.Helpers
             { 
                 angle = -angle; // we need to reverse it for our compass
             }
-            return (angle % 360) + (angle < 0 ? 360 : 0);
+            double realAngle = (angle % 360) + (angle < 0 ? 360 : 0);
+            if (realAngle > 359.9)
+            {
+                return 0; 
+            }
+            return realAngle;
         }
 
         public DoubleAnimation BuildDesiredSineEaseAnimation(DependencyObject dependencyObject, PropertyPath propertyPath)

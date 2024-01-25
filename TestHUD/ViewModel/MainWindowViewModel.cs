@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows.Media;
 using System.Windows.Threading;
@@ -52,7 +53,8 @@ namespace TestHUD.ViewModel
 
             Rpm = new RpmModel()
             {
-                IsVisible = true
+                IsVisible = true,
+                RpmLevel = 0
             };
 
             DamageItem_EngineOverheat = new DamageItemModel()
@@ -80,22 +82,112 @@ namespace TestHUD.ViewModel
             secondsTimer.Start();
 
             //CompositionTarget.Rendering += RenderFrame;
+            //TestAnimation();
 
-            TestAnimation();
+            GenerateAnimation();
         }
 
-        private async void TestAnimation()
+        private async void GenerateAnimation()
         {
-            for (int i = 0; i <= 50; i++)
+            await Task.Delay(1000);
+
+            double periodMin = 5;
+            double periodMax = 10;
+
+            double amplitude = 75;
+            double time = 0;
+            double deltaTime = 0.1; // adjust as needed
+
+            double amplitudeMin = 25;
+            double amplitudeMax = 100;
+
+            // Stopwatch to measure elapsed time
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+
+            bool animationIsDirect = true;
+
+            double period = periodMin;
+
+            //while (stopwatch.Elapsed.TotalSeconds < totalTime)
+            while (true)
             {
-                this.Rpm.RpmLevel = i;
-                await Task.Delay(100);
-            };
+                // На выходе нам нужно получить только положительное значение sineValue, соответствующее амплитуде и периоду.
+                double sineWaveMinimumPosition = amplitudeMin / 2;
+                double sineWaveAmplitude = (amplitudeMax / 2) - sineWaveMinimumPosition; // Учитываем начальную позицию
+                double sineWavePeriod = period * 2; // * 2 - для одного направления
+                double sineWaveOffset = (amplitudeMax / 2) + sineWaveMinimumPosition; // Компенсируем дополнительный offset, вместе с начальной позицией
+                double sineValue = GenerateSineWave(time, sineWaveAmplitude, sineWavePeriod) + sineWaveOffset;
+
+
+                Rpm.RpmLevel = sineValue;
+                Debug.WriteLine("RpmLevel: " + Rpm.RpmLevel);
+
+
+                // Check if it's time to switch to the other period
+                //if (animationIsDirect)
+                //{
+                //    if (Rpm.RpmLevel >= amplitudeMax)
+                //    {
+                //        animationIsDirect = false;
+                //        period = periodMax;
+                //    }
+                //}
+                //else
+                //{
+                //    if (Rpm.RpmLevel <= amplitudeMin)
+                //    {
+                //        animationIsDirect = true;
+                //        period = periodMin;
+                //    }
+                //}
+
+                // Check if it's time to switch to the other period
+                //if (animationIsDirect)
+                //if (Rpm.RpmLevel >= amplitudeMax)
+                //{
+                //    // Switch the period
+                //    period = (period == periodMin) ? periodMax : periodMin;
+                //    periodTime = 0; // Reset time for the new period
+                //}
+
+
+
+                //if (animationIsDirect)
+                //{
+                //    period = periodMin;
+                //}
+                //else
+                //{
+                //    period = periodMax;
+                //}
+                Debug.WriteLine("period: " + period);
+
+                time += deltaTime;
+
+                // Add a delay for smoother animation (adjust as needed)
+                await Task.Delay((int)(deltaTime * 1000));
+            }
+
+            stopwatch.Stop();
         }
 
-        private void RenderFrame(object? sender, EventArgs e)
+        private double GenerateSineWave(double x, double amplitude, double period)
         {
+            // Calculate the sine wave value using the formula: y = A * sin(2 * π * x / T + φ)
+            double initialPhase = -Math.Asin(1.0);
+            double radianValue = 2 * Math.PI * x / period + initialPhase;
+            double sineValue = amplitude * Math.Sin(radianValue);
+            return sineValue;
         }
+
+        //private static double CalculateOffset(double time, double startOffset, double endOffset)
+        //{
+        //    // Linearly interpolate between startOffset and endOffset based on time
+        //    double normalizedTime = time % 1; // Ensure time is within one period
+        //    double offsetRange = endOffset - startOffset;
+        //    return startOffset + offsetRange * normalizedTime;
+        //}
 
         #region Damages
         private void secondsTimer_Tick(object? sender, EventArgs e)
