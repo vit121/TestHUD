@@ -9,8 +9,32 @@ namespace TestHUD.CustomControls
     /// </summary>
     public partial class RpmView : UserControl
     {
-        public int RpmViewSize { get { return 120; } }
-        public double RpmTargetAngle { get { return 300; } }
+        public int RpmViewSize
+        {
+            get { return (int)GetValue(RpmViewSizeProperty); }
+            set { SetValue(RpmViewSizeProperty, value); }
+        }
+
+        public static readonly DependencyProperty RpmViewSizeProperty =
+            DependencyProperty.Register("RpmViewSize", typeof(int), typeof(RpmView), new FrameworkPropertyMetadata(120));
+
+        public double RpmTargetAngle
+        {
+            get { return (double)GetValue(RpmTargetAngleProperty); }
+            set { SetValue(RpmTargetAngleProperty, value); }
+        }
+
+        public static readonly DependencyProperty RpmTargetAngleProperty =
+            DependencyProperty.Register("RpmTargetAngle", typeof(double), typeof(RpmView), new FrameworkPropertyMetadata(300.0));
+
+        public double RpmRadius
+        {
+            get { return (double)GetValue(RpmRadiusProperty); }
+            set { SetValue(RpmRadiusProperty, value); }
+        }
+
+        public static readonly DependencyProperty RpmRadiusProperty =
+            DependencyProperty.Register("RpmRadius", typeof(double), typeof(RpmView), new FrameworkPropertyMetadata(40.0));
 
         public Point RpmArcCenter
         {

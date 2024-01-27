@@ -9,16 +9,6 @@
             <Color x:Key="ColorDamageOrange">Orange</Color>
             <Color x:Key="ColorDamageBlue">LightSkyBlue</Color>
 
-            <BitmapImage x:Key="image_tankcompass_compass" UriSource="/TestHUD;component/Images/tankcompass_compass.png" />
-            <BitmapImage x:Key="image_tankcompass_pad" UriSource="/TestHUD;component/Images/tankcompass_pad.png" />
-            <BitmapImage x:Key="image_tankcompass_tower" UriSource="/TestHUD;component/Images/tankcompass_tower.png" />
-            
-            <BitmapImage x:Key="image_isEngineOverheat" UriSource="/TestHUD;component/Images/isEngineOverheat.png" />
-            <BitmapImage x:Key="image_isOilLowPressure" UriSource="/TestHUD;component/Images/isOilLowPressure.png" />
-            <BitmapImage x:Key="image_isEngineDamaged" UriSource="/TestHUD;component/Images/isEngineDamaged.png" />
-            <BitmapImage x:Key="image_isHeadLightsOn" UriSource="/TestHUD;component/Images/isHeadLightsOn.png" />
-            <BitmapImage x:Key="image_isAccumLowPower" UriSource="/TestHUD;component/Images/isAccumLowPower.png" />
-
             <Style TargetType="{x:Type TextBlock}">
                 <Setter Property="Foreground" Value="White"/>
                 <Setter Property="FontWeight" Value="Bold"/>

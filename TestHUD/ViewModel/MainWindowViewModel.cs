@@ -12,10 +12,6 @@ namespace TestHUD.ViewModel
         public RpmModel Rpm { get; set; }
         public DamagesModel Damages { get; set; }
 
-        DispatcherTimer secondsTimer;
-        Random random = new Random();
-        int[] damageItemNumbers = [1, 2, 3, 4, 5];
-
         public MainWindowViewModel()
         {
             Compass = new CompassModel();
@@ -23,61 +19,53 @@ namespace TestHUD.ViewModel
             Rpm = new RpmModel();
             Damages = new DamagesModel();
 
-            // Animation: Compass. Angle
+            #region Animation: Compass. Angle and Tower
             AnimationService animation_Compass_CourseAngle = new AnimationService();
             animation_Compass_CourseAngle.TargetModified += (target) =>
             {
                 Compass.CourseAngle = target;
             };
+            // Данные: вращение в одну сторону 0.5 оборота 10 секунд, в другую - 2 полных оборота 15 секунд
             animation_Compass_CourseAngle.StartAnimationAsync(from: 0, to: 180, periodForward: 10, periodBack: 15, targetCustomCompassPosition: -720);
 
-            // Animation: Compass. Tower
             AnimationService animation_Compass_CourseTower = new AnimationService();
             animation_Compass_CourseTower.TargetModified += (target) =>
             {
                 Compass.TowerAngle = target;
             };
+            // Данные: вращение в одну сторону 45 градусов 8 секунд, в другую - 90 градусов 20 секунд
             animation_Compass_CourseTower.StartAnimationAsync(from: 0, to: 45, periodForward: 8, periodBack: 20, targetCustomCompassPosition: -90);
+            #endregion
 
-            // Animation: Speed
+            #region Animation: Speed
             AnimationService animation_Speed = new AnimationService();
             animation_Speed.TargetModified += (target) =>
             {
                 Speed.Speed = target;
             };
+            // Данные: набор скорости до 120 в течение 5 секунд, сброс до 0 в течение 10 секунд
             animation_Speed.StartAnimationAsync(from: 0, to: 120, periodForward: 5, periodBack: 10);
+            #endregion
 
-            // Animation: Rpm
+            #region Animation: Rpm
             AnimationService animation_RpmLevel = new AnimationService();
             animation_RpmLevel.TargetModified += (target) =>
             {
                 Rpm.RpmLevel = target;
             };
+            // Данные: набор оборотов от 25 до 100 в течение 5 секунд, сброс до 25 в течение 10 секунд
             animation_RpmLevel.StartAnimationAsync(from: 25, to: 100, periodForward: 5, periodBack: 10);
+            #endregion
 
-            // Animation: Damages and Rpm ignition flag
-            secondsTimer = new DispatcherTimer();
-            secondsTimer.Interval = new TimeSpan(0, 0, 1);
-            secondsTimer.Tick += secondsTimer_Tick;
-            secondsTimer.Start();
+            #region Timer imitation: Damages and Rpm ignition indicator
+            DamagesAndIgnitionSerivce animation_DamagesAndIgnition = new DamagesAndIgnitionSerivce();
+            animation_DamagesAndIgnition.TargetModified += (isTrue, damageId) =>
+            {
+                Rpm.IgnitionIsOn = isTrue;
+                Damages.GetDamageItemFromId(damageId).IsDamaged = isTrue;
+            };
+            animation_DamagesAndIgnition.StartImitation();
+            #endregion
         }
-
-        #region Damages
-        private void secondsTimer_Tick(object? sender, EventArgs e)
-        {
-            ImitateTimerData();
-        }
-
-        private void ImitateTimerData()
-        {
-            bool randomBool = random.Next(2) == 1;
-            // Rpm ignition
-            Rpm.IgnitionIsOn = randomBool; // random turning on/off
-            // Damages
-            int randomIndex = random.Next(0, 5);
-            int randomNumber = damageItemNumbers[randomIndex];
-            Damages.GetDamageItemFromId(randomNumber).IsDamaged = randomBool; // random damage item
-        }
-        #endregion
     }
 }

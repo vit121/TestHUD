@@ -13,13 +13,13 @@
         Background="Black"
         Width="256">
         <Image 
-            Source="{StaticResource image_tankcompass_pad}"
+            Source="/TestHUD;component/Images/tankcompass_pad.png"
             VerticalAlignment="Center"
             Width="256" Height="120"/>
         <Grid
              HorizontalAlignment="Left">
             <Image
-                Source="{StaticResource image_tankcompass_compass}"
+                Source="/TestHUD;component/Images/tankcompass_compass.png"
                 Width="120" Height="120">
                 <Image.RenderTransform>
                     <RotateTransform
@@ -27,7 +27,7 @@
                 </Image.RenderTransform>
             </Image>
             <Image
-                Source="{StaticResource image_tankcompass_tower}"
+                Source="/TestHUD;component/Images/tankcompass_tower.png"
                 Width="72" Height="72">
                 <Image.RenderTransform>
                     <RotateTransform
@@ -43,11 +43,13 @@
                 FontSize="32"
                 HorizontalAlignment="Center"
                 Text="{Binding CourseAngle, Converter={StaticResource AngleConverter}, ConverterParameter='reverse', StringFormat={}{0:0}}"
+                d:Text="0"
                 TextTrimming="CharacterEllipsis"/>
             <TextBlock 
                 FontSize="32"
                 HorizontalAlignment="Center"
                 Text="{Binding TowerAngle, Converter={StaticResource AngleConverter}, StringFormat={}{0:0}}"
+                d:Text="0"
                 TextTrimming="CharacterEllipsis"/>
         </StackPanel>
     </Grid>

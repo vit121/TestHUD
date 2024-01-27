@@ -1,4 +1,6 @@
-﻿using TestHUD.Model.Base;
+﻿using System.Reflection.Metadata;
+using TestHUD.Helpers;
+using TestHUD.Model.Base;
 
 namespace TestHUD.Model
 {
@@ -31,7 +33,7 @@ namespace TestHUD.Model
         public SpeedModel()
         {
             IsVisible = true;
-            SpeedUnits = "км/ч";
+            SpeedUnits = Constants.UnitsSpeed;
         }
     }
 }

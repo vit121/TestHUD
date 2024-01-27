@@ -12,13 +12,11 @@ namespace TestHUD.Services
                                               double targetCustomCompassPosition = 0)
         {
             double currentPosition = 0;
-            double fromPosition = 0;
-            double toPosition = 0;
             while (IsAnimating)
             {
                 // Forward
-                fromPosition = from;
-                toPosition = to;
+                double fromPosition = from;
+                double toPosition = to;
                 if (targetCustomCompassPosition != 0)
                 {
                     fromPosition = AnimationHelper.Instance.CalculateAngle(currentPosition);

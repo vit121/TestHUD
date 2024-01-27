@@ -24,31 +24,36 @@
                 Grid.Column="0"
                 IsDamaged="{Binding DamageItem_EngineOverheat.IsDamaged}"
                 ItemDamageColor="{StaticResource ColorDamageRed}"
-                Source="{StaticResource image_isEngineOverheat}" />
+                Source="/TestHUD;component/Images/isEngineOverheat.png"
+                d:IsDamaged="false"/>
             <customControls:DamageItemView 
                 Grid.Row="0"
                 Grid.Column="1"
                 IsDamaged="{Binding DamageItem_OilLowPressure.IsDamaged}"
                 ItemDamageColor="{StaticResource ColorDamageRed}"
-                Source="{StaticResource image_isOilLowPressure}"/>
+                Source="/TestHUD;component/Images/isOilLowPressure.png"
+                d:IsDamaged="false"/>
             <customControls:DamageItemView 
                 Grid.Row="0"
                 Grid.Column="2"
                 IsDamaged="{Binding DamageItem_EngineDamaged.IsDamaged}"
                 ItemDamageColor="{StaticResource ColorDamageOrange}"
-                Source="{StaticResource image_isEngineDamaged}"/>
+                Source="/TestHUD;component/Images/isEngineDamaged.png"
+                d:IsDamaged="true"/>
             <customControls:DamageItemView 
                 Grid.Row="1"
                 Grid.Column="0"
                 IsDamaged="{Binding DamageItem_HeadLightsOn.IsDamaged}"
                 ItemDamageColor="{StaticResource ColorDamageBlue}"
-                Source="{StaticResource image_isHeadLightsOn}"/>
+                Source="/TestHUD;component/Images/isHeadLightsOn.png"
+                d:IsDamaged="true"/>
             <customControls:DamageItemView 
                 Grid.Row="1"
                 Grid.Column="1"
                 IsDamaged="{Binding DamageItem_AccumLowPower.IsDamaged}"
                 ItemDamageColor="{StaticResource ColorDamageRed}"
-                Source="{StaticResource image_isAccumLowPower}"/>
+                Source="/TestHUD;component/Images/isAccumLowPower.png"
+                d:IsDamaged="true"/>
         </Grid>
     </Grid>
 </UserControl>

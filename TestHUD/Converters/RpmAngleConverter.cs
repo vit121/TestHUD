@@ -15,12 +15,10 @@ namespace TestHUD.Converters
                     return ((double)values[1] * angle) / 100;
                 }
             }
-            throw new NotSupportedException();
+            return 10;
         }
-
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
            => throw new NotSupportedException();
     }
-
 }

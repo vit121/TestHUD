@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:converters="clr-namespace:TestHUD.Converters"
              xmlns:customControls="clr-namespace:TestHUD.CustomControls"
+             xmlns:constants="clr-namespace:TestHUD.Helpers"
              mc:Ignorable="d"
              x:Name="userControl">
     <UserControl.Resources>
@@ -15,20 +16,29 @@
         DataContext="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=Rpm}" 
         Background="Black"
         Width="{Binding Path=RpmViewSize, ElementName=userControl}" 
-        Height="{Binding Path=RpmViewSize, ElementName=userControl}"  >
+        Height="{Binding Path=RpmViewSize, ElementName=userControl}"
+        d:Width="120"
+        d:Height="120">
         <Grid
             RenderTransformOrigin="0.5, 0.5">
             <Grid.RenderTransform>
-                <RotateTransform Angle="{Binding Path=RpmAngle, ElementName=userControl}"  />
+                <RotateTransform 
+                    Angle="{Binding Path=RpmAngle, ElementName=userControl}" 
+                    d:Angle="30"/>
             </Grid.RenderTransform>
             <customControls:RpmArc 
                 Color="Gray"
                 Center="{Binding Path=RpmArcCenter, ElementName=userControl}"
-                TargetAngle="{Binding Path=RpmTargetAngle, ElementName=userControl}">
+                TargetAngle="{Binding Path=RpmTargetAngle, ElementName=userControl}"
+                Radius="{Binding Path=RpmRadius, ElementName=userControl}"
+                d:Center="60,60">
             </customControls:RpmArc>
             <customControls:RpmArc
                 Color="White"
-                Center="{Binding Path=RpmArcCenter, ElementName=userControl}" >
+                Center="{Binding Path=RpmArcCenter, ElementName=userControl}"
+                Radius="{Binding Path=RpmRadius, ElementName=userControl}"
+                d:TargetAngle="70"
+                d:Center="60,60">
                 <customControls:RpmArc.TargetAngle>
                     <MultiBinding Converter="{StaticResource RpmAngleConverter}">
                         <Binding Path="RpmTargetAngle" ElementName="userControl"/>
@@ -42,7 +52,8 @@
             FontSize="14"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
-            Foreground="Gray"/>
+            Foreground="Gray"
+            d:Text="{Binding Source={x:Static constants:Constants.UnitsRpm}}"/>
         <Grid
             Margin="0,0,0,14"
             VerticalAlignment="Bottom"

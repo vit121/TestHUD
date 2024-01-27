@@ -1,4 +1,5 @@
-﻿using TestHUD.Model.Base;
+﻿using TestHUD.Helpers;
+using TestHUD.Model.Base;
 
 namespace TestHUD.Model
 {
@@ -42,7 +43,7 @@ namespace TestHUD.Model
         public RpmModel()
         {
             IsVisible = true;
-            RpmUnits = "об/мин";
+            RpmUnits = Constants.UnitsRpm;
         }
     }
 }
