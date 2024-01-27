@@ -1,8 +1,8 @@
-﻿using System.ComponentModel;
+﻿using TestHUD.Model.Base;
 
 namespace TestHUD.Model
 {
-    public class RpmModel: INotifyPropertyChanged
+    public class RpmModel: BaseModel
     {
         private bool isVisible;
         public bool IsVisible
@@ -37,13 +37,12 @@ namespace TestHUD.Model
             }
         }
 
-        #region PropertyChanged
-        public event PropertyChangedEventHandler PropertyChanged;
+        public string RpmUnits { get; set; }
 
-        public void NotifyPropertyChanged(string propName)
+        public RpmModel()
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+            IsVisible = true;
+            RpmUnits = "об/мин";
         }
-        #endregion
     }
 }

@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media;
+﻿using System.Windows.Media;
 using System.Windows;
-using TestHUD.Helpers;
 
 namespace TestHUD.CustomControls
 {
-    class CustomArc : FrameworkElement
+    class RpmArc : FrameworkElement
     {
         public double StartAngle
         {
@@ -18,7 +12,7 @@ namespace TestHUD.CustomControls
         }
 
         public static readonly DependencyProperty StartAngleProperty =
-            DependencyProperty.Register("StartAngle", typeof(double), typeof(CustomArc), new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.AffectsRender));
+            DependencyProperty.Register("StartAngle", typeof(double), typeof(RpmArc), new FrameworkPropertyMetadata(90.0, FrameworkPropertyMetadataOptions.AffectsRender));
 
         public double TargetAngle
         {
@@ -27,8 +21,8 @@ namespace TestHUD.CustomControls
         }
 
         public static readonly DependencyProperty TargetAngleProperty =
-            DependencyProperty.Register("TargetAngle", typeof(double), typeof(CustomArc),
-                new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.AffectsRender));
+            DependencyProperty.Register("TargetAngle", typeof(double), typeof(RpmArc),
+                new FrameworkPropertyMetadata(300.0, FrameworkPropertyMetadataOptions.AffectsRender));
 
         public Point Center
         {
@@ -37,7 +31,7 @@ namespace TestHUD.CustomControls
         }
 
         public static readonly DependencyProperty CenterProperty =
-            DependencyProperty.Register("Center", typeof(Point), typeof(CustomArc), new FrameworkPropertyMetadata(new Point(0, 0), FrameworkPropertyMetadataOptions.AffectsRender));
+            DependencyProperty.Register("Center", typeof(Point), typeof(RpmArc), new FrameworkPropertyMetadata(new Point(0, 0), FrameworkPropertyMetadataOptions.AffectsRender));
 
         public double Radius
         {
@@ -46,7 +40,7 @@ namespace TestHUD.CustomControls
         }
 
         public static readonly DependencyProperty RadiusProperty =
-            DependencyProperty.Register("Radius", typeof(double), typeof(CustomArc), new FrameworkPropertyMetadata(10.0, FrameworkPropertyMetadataOptions.AffectsRender));
+            DependencyProperty.Register("Radius", typeof(double), typeof(RpmArc), new FrameworkPropertyMetadata(40.0, FrameworkPropertyMetadataOptions.AffectsRender));
 
         public Brush Color
         {
@@ -55,16 +49,16 @@ namespace TestHUD.CustomControls
         }
 
         public static readonly DependencyProperty ColorProperty =
-            DependencyProperty.Register("Color", typeof(Brush), typeof(CustomArc), new FrameworkPropertyMetadata((Brush)Brushes.Gray, FrameworkPropertyMetadataOptions.AffectsRender));
+            DependencyProperty.Register("Color", typeof(Brush), typeof(RpmArc), new FrameworkPropertyMetadata((Brush)Brushes.Gray, FrameworkPropertyMetadataOptions.AffectsRender));
 
-        public double StrokeThickness
+        public double Border
         {
-            get { return (double)GetValue(StrokeThicknessProperty); }
-            set { SetValue(StrokeThicknessProperty, value); }
+            get { return (double)GetValue(BorderProperty); }
+            set { SetValue(BorderProperty, value); }
         }
 
-        public static readonly DependencyProperty StrokeThicknessProperty =
-            DependencyProperty.Register("StrokeThickness", typeof(double), typeof(CustomArc), new FrameworkPropertyMetadata((double)1, FrameworkPropertyMetadataOptions.AffectsRender));
+        public static readonly DependencyProperty BorderProperty =
+            DependencyProperty.Register("Border", typeof(double), typeof(RpmArc), new FrameworkPropertyMetadata((double)10, FrameworkPropertyMetadataOptions.AffectsRender));
 
         protected override void OnRender(DrawingContext drawingContext)
         {
@@ -72,7 +66,8 @@ namespace TestHUD.CustomControls
             DrawArc(drawingContext);
         }
 
-        private Point PolarToCartesian(double angle, double radius, Point center)
+        // Имеем центр, угол, радиус - возвращаем координаты
+        private Point PolarToCartesian(Point center, double angle, double radius)
         {
             double pointX = (center.X + (radius * Math.Cos(DegreesToRadian(angle))));
             double pointY = (center.Y + (radius * Math.Sin(DegreesToRadian(angle))));
@@ -86,14 +81,14 @@ namespace TestHUD.CustomControls
 
         private void DrawArc(DrawingContext drawingContext)
         {
-            Point startPoint = PolarToCartesian(StartAngle, Radius, Center);
-            Point endPoint = PolarToCartesian(StartAngle + TargetAngle, Radius, Center);
+            Point startPoint = PolarToCartesian(Center, StartAngle, Radius);
+            Point endPoint = PolarToCartesian(Center, StartAngle + TargetAngle, Radius);
             Size size = new(Radius, Radius);
 
             bool isLarge = TargetAngle > 180;
 
             List<PathSegment> segments = new List<PathSegment>(1);
-            segments.Add(new ArcSegment(endPoint, size, 0.0, isLarge, SweepDirection.Clockwise, true));
+            segments.Add(new ArcSegment(endPoint, size, 0.0, isLarge, SweepDirection.Clockwise, true)); // рисуем только по часовой
 
             List<PathFigure> figures = new List<PathFigure>(1);
             PathFigure pf = new PathFigure(startPoint, segments, true);
@@ -101,7 +96,7 @@ namespace TestHUD.CustomControls
             figures.Add(pf);
             Geometry geometry = new PathGeometry(figures, FillRule.EvenOdd, null);
 
-            drawingContext.DrawGeometry(null, new Pen(Color, StrokeThickness), geometry);
+            drawingContext.DrawGeometry(null, new Pen(Color, Border), geometry);
         }
     }
 }

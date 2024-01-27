@@ -1,29 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Globalization;
 using System.Windows.Data;
-using TestHUD.Helpers;
 
 namespace TestHUD.Converters
 {
-    public class RpmAngleConverter : IValueConverter
+    public class RpmAngleConverter : IMultiValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            double angle = 300;
-            if (value is double)
+            if (values[0] is double)
             {
-                return ((double)value * angle) / 100;
+                double angle = (double)values[0];
+                if (values[1] is double)
+                {
+                    return ((double)values[1] * angle) / 100;
+                }
             }
             throw new NotSupportedException();
         }
 
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-            => throw new NotSupportedException();
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+           => throw new NotSupportedException();
     }
+
 }

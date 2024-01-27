@@ -1,8 +1,8 @@
-﻿using System.ComponentModel;
+﻿using TestHUD.Model.Base;
 
 namespace TestHUD.Model
 {
-    public class CompassModel: INotifyPropertyChanged
+    public class CompassModel: BaseModel
     {
         private bool isVisible;
         public bool IsVisible
@@ -37,15 +37,9 @@ namespace TestHUD.Model
             }
         }
 
-        #region PropertyChanged
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void NotifyPropertyChanged(string propName)
+        public CompassModel()
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+            IsVisible = true;
         }
-
-        #endregion
     }
 }

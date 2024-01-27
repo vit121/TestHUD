@@ -15,7 +15,6 @@
         <Image 
             Source="{StaticResource image_tankcompass_pad}"
             VerticalAlignment="Center"
-            Margin="0,0,0,0"
             Width="256" Height="120"/>
         <Grid
              HorizontalAlignment="Left">

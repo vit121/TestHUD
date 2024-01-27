@@ -7,8 +7,7 @@
     <Grid
         DataContext="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=Speed}" 
         Background="Black"
-        Width="256"
-        Margin="20,0,0,0">
+        Width="256">
         <Grid
             HorizontalAlignment="Center"
             VerticalAlignment="Center">

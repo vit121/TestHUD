@@ -6,9 +6,9 @@
              xmlns:customControls="clr-namespace:TestHUD.CustomControls"
              mc:Ignorable="d" >
     <Grid
+        DataContext="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=Damages}" 
         Background="Black"
-        Width="256"
-        Margin="20,0,0,0">
+        Width="256">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />

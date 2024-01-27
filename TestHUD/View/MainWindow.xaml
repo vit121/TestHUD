@@ -4,7 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        xmlns:converters="clr-namespace:TestHUD.Converters"
         xmlns:customControls="clr-namespace:TestHUD.CustomControls"
         Title="MainWindow" Height="550" Width="1100">
     <Window.Resources>
@@ -28,6 +27,7 @@
                 Compass="{Binding Compass}"/>
             <!-- Part 2: Speed -->
             <customControls:SpeedView
+                Margin="20,0,0,0"
                 Visibility="{Binding Speed.IsVisible, Converter={StaticResource booleanToVisibilityConverter}}"
                 Speed="{Binding Speed}"/>
             <!-- Part 3: RPM -->
@@ -37,7 +37,9 @@
                 Rpm="{Binding Rpm}" />
             <!-- Part 4: Damages -->
             <customControls:DamagesView
-                Visibility="{Binding IsVisible_Damages, Converter={StaticResource booleanToVisibilityConverter}}"/>
+                Margin="20,0,0,0"
+                Visibility="{Binding Damages.IsVisible, Converter={StaticResource booleanToVisibilityConverter}}"
+                Damages="{Binding Damages}"/>
         </StackPanel>
     </Grid>
 </Window>

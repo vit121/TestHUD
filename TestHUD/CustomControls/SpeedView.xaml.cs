@@ -1,8 +1,5 @@
-﻿using System.Diagnostics;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media.Animation;
-using TestHUD.Helpers;
 using TestHUD.Model;
 
 namespace TestHUD.CustomControls
@@ -18,16 +15,7 @@ namespace TestHUD.CustomControls
             set { SetValue(SpeedProperty, value); }
         }
 
-        private static void Speed_PropertyChanged(DependencyObject dobj, DependencyPropertyChangedEventArgs e)
-        {
-            var userControl = (SpeedView)dobj;
-        }
-
-        public static readonly DependencyProperty SpeedProperty = DependencyProperty.Register("Speed", typeof(SpeedModel), typeof(SpeedView),
-            new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.None, new PropertyChangedCallback(Speed_PropertyChanged)));
-
-        DoubleAnimation animation = new DoubleAnimation();
-        bool animationIsForward = true;
+        public static readonly DependencyProperty SpeedProperty = DependencyProperty.Register("Speed", typeof(SpeedModel), typeof(SpeedView));
 
         public SpeedView()
         {

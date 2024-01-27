@@ -16,6 +16,6 @@
             IsChecked="{Binding Rpm.IsVisible}" />
         <CheckBox
             Content="Повреждения"
-            IsChecked="{Binding IsVisible_Damages}" />
+            IsChecked="{Binding Damages.IsVisible}" />
     </StackPanel>
 </UserControl>

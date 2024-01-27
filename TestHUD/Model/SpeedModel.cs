@@ -1,8 +1,8 @@
-﻿using System.ComponentModel;
+﻿using TestHUD.Model.Base;
 
 namespace TestHUD.Model
 {
-    public class SpeedModel: INotifyPropertyChanged
+    public class SpeedModel: BaseModel
     {
         private bool isVisible;
         public bool IsVisible
@@ -26,15 +26,12 @@ namespace TestHUD.Model
             }
         }
 
-        public string SpeedUnits { get; set; } = "км/ч";
+        public string SpeedUnits { get; set; }
 
-        #region PropertyChanged
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void NotifyPropertyChanged(string propName)
+        public SpeedModel()
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+            IsVisible = true;
+            SpeedUnits = "км/ч";
         }
-        #endregion
     }
 }

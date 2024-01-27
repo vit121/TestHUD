@@ -9,39 +9,36 @@
              x:Name="userControl">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="booleanToVisibilityConverter" />
-        <converters:RpmLevelConverter x:Key="RpmLevelConverter"></converters:RpmLevelConverter>
         <converters:RpmAngleConverter x:Key="RpmAngleConverter"></converters:RpmAngleConverter>
     </UserControl.Resources>
     <Grid
         DataContext="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=Rpm}" 
         Background="Black"
-        Width="{Binding Path=RpmViewSize, ElementName=userControl}"
-        Height="{Binding Path=RpmViewSize, ElementName=userControl}">
+        Width="{Binding Path=RpmViewSize, ElementName=userControl}" 
+        Height="{Binding Path=RpmViewSize, ElementName=userControl}"  >
         <Grid
             RenderTransformOrigin="0.5, 0.5">
             <Grid.RenderTransform>
-                <RotateTransform Angle="30" />
+                <RotateTransform Angle="{Binding Path=RpmAngle, ElementName=userControl}"  />
             </Grid.RenderTransform>
-            <customControls:CustomArc 
-                Center="60,60"
-                StartAngle="90"
-                TargetAngle="300"
-                Radius="40"
+            <customControls:RpmArc 
                 Color="Gray"
-                StrokeThickness="10">
-            </customControls:CustomArc>
-            <customControls:CustomArc 
-                x:Name="rpm_level" 
-                Center="60,60"
-                StartAngle="90"
-                TargetAngle="{Binding Path=Rpm.RpmLevel, Converter={StaticResource RpmAngleConverter}, ConverterParameter=300, ElementName=userControl}"
-                Radius="40"
+                Center="{Binding Path=RpmArcCenter, ElementName=userControl}"
+                TargetAngle="{Binding Path=RpmTargetAngle, ElementName=userControl}">
+            </customControls:RpmArc>
+            <customControls:RpmArc
                 Color="White"
-                StrokeThickness="10">
-            </customControls:CustomArc>
+                Center="{Binding Path=RpmArcCenter, ElementName=userControl}" >
+                <customControls:RpmArc.TargetAngle>
+                    <MultiBinding Converter="{StaticResource RpmAngleConverter}">
+                        <Binding Path="RpmTargetAngle" ElementName="userControl"/>
+                        <Binding Path="RpmLevel"/>
+                    </MultiBinding>
+                </customControls:RpmArc.TargetAngle>
+            </customControls:RpmArc>
         </Grid>
         <TextBlock 
-            Text="об/мин"
+            Text="{Binding RpmUnits}"
             FontSize="14"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"

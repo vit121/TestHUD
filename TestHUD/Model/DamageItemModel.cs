@@ -1,8 +1,8 @@
-﻿using System.ComponentModel;
+﻿using TestHUD.Model.Base;
 
 namespace TestHUD.Model
 {
-    public class DamageItemModel: INotifyPropertyChanged
+    public class DamageItemModel: BaseModel
     {
         public int DamageId { get; set; }
 
@@ -16,16 +16,5 @@ namespace TestHUD.Model
                 NotifyPropertyChanged("IsDamaged");
             }
         }
-
-        #region PropertyChanged
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void NotifyPropertyChanged(string propName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
-        }
-
-        #endregion
     }
 }
