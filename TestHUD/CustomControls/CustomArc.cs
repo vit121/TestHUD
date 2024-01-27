@@ -91,7 +91,6 @@ namespace TestHUD.CustomControls
             Size size = new(Radius, Radius);
 
             bool isLarge = TargetAngle > 180;
-            //Debug.WriteLine("isLarge: " + isLarge + " " + TargetAngle);
 
             List<PathSegment> segments = new List<PathSegment>(1);
             segments.Add(new ArcSegment(endPoint, size, 0.0, isLarge, SweepDirection.Clockwise, true));

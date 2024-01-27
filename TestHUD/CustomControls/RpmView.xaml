@@ -40,7 +40,6 @@
                 StrokeThickness="10">
             </customControls:CustomArc>
         </Grid>
-            
         <TextBlock 
             Text="об/мин"
             FontSize="14"

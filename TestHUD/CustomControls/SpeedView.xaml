@@ -37,23 +37,5 @@
                     Text="{Binding SpeedUnits}"/>
             </StackPanel>
         </Grid>
-        <!-- TODO: Dirty hack! I have to use this hidden item for now, for the Speed sine animation -->
-        <GroupBox
-            x:Name="speed_level"
-            Visibility="Hidden"
-            Background="White"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Height="0"
-            Width="1">
-            <GroupBox.Triggers>
-                <EventTrigger RoutedEvent="Button.Click">
-                    <BeginStoryboard>
-                        <Storyboard x:Name="storyboardSpeed">
-                        </Storyboard>
-                    </BeginStoryboard>
-                </EventTrigger>
-            </GroupBox.Triggers>
-        </GroupBox>
     </Grid>
 </UserControl>
